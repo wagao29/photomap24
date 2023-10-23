@@ -25,8 +25,7 @@ export const onDeletePhoto = functions
     await mapPhotosDocRef.set(updatedDocData, { merge: true });
 
     // 画像を削除
-    // TODO: png 以外も考慮
     const bucket = admin.storage().bucket();
-    const photoPath = `photos/${photoId}.png`;
+    const photoPath = `photos/${photoId}.jpg`;
     await bucket.file(photoPath).delete();
   });

@@ -12,10 +12,9 @@ export const createPhoto = async (
   console.debug('[API] createPhoto');
 
   const photosCollectionRef = doc(collection(db, `version/${FIRESTORE_VERSION}/photos`));
-  // TODO: png 以外も考慮
-  const storagePhotoRef = ref(storage, `photos/${photosCollectionRef.id}.png`);
+  const storagePhotoRef = ref(storage, `photos/${photosCollectionRef.id}.jpg`);
 
-  await uploadBytes(storagePhotoRef, photoFile, { contentType: 'image/png' });
+  await uploadBytes(storagePhotoRef, photoFile, { contentType: 'image/jpeg' });
 
   await setDoc(photosCollectionRef, {
     pos: new GeoPoint(pos.latitude, pos.longitude),

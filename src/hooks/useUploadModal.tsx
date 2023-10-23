@@ -1,3 +1,4 @@
+import Compressor from 'compressorjs';
 import { useCallback, useState } from 'react';
 import { createPhoto } from '../apis/createPhoto';
 import { fetchAddress } from '../apis/fetchAddress';
@@ -38,8 +39,17 @@ const useUploadModal = () => {
             setImgUrl(reader.result.toString());
           }
         });
-        reader.readAsDataURL(e.target.files[0]);
-        setPhotoFile(e.target.files[0]);
+        new Compressor(e.target.files[0], {
+          quality: 0.6,
+          convertTypes: 'image/jpeg',
+          success(result) {
+            reader.readAsDataURL(result);
+            setPhotoFile(result as File);
+          },
+          error(err) {
+            console.log(err.message);
+          }
+        });
       }
     }, []);
 
