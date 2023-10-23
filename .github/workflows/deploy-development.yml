@@ -16,6 +16,7 @@ jobs:
       VITE_APP_ID: ${{ secrets.VITE_APP_ID_DEV }}
       VITE_VITE_MEASUREMENT_ID: ${{ secrets.VITE_MEASUREMENT_ID_DEV }}
       VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN_DEV }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_DEV }}
     steps:
       - uses: actions/checkout@v3
