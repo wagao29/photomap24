@@ -1,7 +1,7 @@
 import iconStampLogo from '../assets/icon_stamp_logo.png';
 import { MAX_MAP_PHOTO_COUNT } from '../constants';
-import { getPhotoUrl } from '../utils/getPhotoUrl';
-import PhotoImg from './PhotoImg';
+import { getThumbnailUrl } from '../utils/getThumbnailUrl';
+import ThumbnailImg from './ThumbnailImg';
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,8 +14,8 @@ const photoNumberClassName =
 const baseStyle = {
   width: 30,
   height: 30,
-  top: 0,
-  right: 0
+  top: -10,
+  right: -10
 };
 
 const PhotoNumber = ({ points }: Props) => {
@@ -49,8 +49,8 @@ const MapPhotoThumbnail = ({ points }: Props) => {
   return (
     <div className='bg-white rounded-full hover:cursor-pointer hover:bg-gray-100'>
       <PhotoNumber points={points} />
-      <PhotoImg
-        src={pointCount < MAX_MAP_PHOTO_COUNT ? getPhotoUrl(mapPhoto.id) : iconStampLogo}
+      <ThumbnailImg
+        src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconStampLogo}
         size={100}
         className=''
       />

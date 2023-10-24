@@ -27,5 +27,6 @@ export const onDeletePhoto = functions
     // 画像を削除
     const bucket = admin.storage().bucket();
     const photoPath = `photos/${photoId}.jpg`;
-    await bucket.file(photoPath).delete();
+    const thumbnailPath = `thumbnails/${photoId}.jpg`;
+    await Promise.all([bucket.file(photoPath).delete(), bucket.file(thumbnailPath).delete()]);
   });

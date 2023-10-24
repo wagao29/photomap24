@@ -7,6 +7,7 @@ import DialogCloseButton from '../components/DialogCloseButton';
 import ImageInput from '../components/ImageInput';
 import Spinner from '../components/Spinner';
 import { Coordinates } from '../types';
+import { generateThumbnail } from '../utils/generateThumbnail';
 
 type Props = {
   currentPos?: Coordinates;
@@ -57,8 +58,9 @@ const useUploadModal = () => {
       try {
         if (!photoFile) return;
         setIsLoading(true);
+        const thumbnailBlob = await generateThumbnail(photoFile);
         const address = await fetchAddress(currentPos.latitude, currentPos.longitude);
-        await createPhoto(photoFile, currentPos, address);
+        await createPhoto(photoFile, thumbnailBlob, currentPos, address);
       } catch (error) {
         console.error(error);
       } finally {

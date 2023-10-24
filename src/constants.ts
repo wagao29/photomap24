@@ -21,6 +21,8 @@ export const MAX_MAP_PHOTO_COUNT = 100;
 export const MAP_STYLE_URL = 'mapbox://styles/wagao/clgs32tjq000x01pp86cy39az';
 export const CLUSTER_RADIUS = 100;
 
+export const THUMBNAIL_SIZE = 100;
+
 // ダイアログ種別
 export const DIALOG_CONFIRM = 'dialog_confirm';
 export const DIALOG_DELETE = 'dialog_delete';

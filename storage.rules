@@ -4,5 +4,8 @@ service firebase.storage {
     match /photos/{photoId} {
     	allow read, create: if true;
     }
+    match /thumbnails/{photoId} {
+    	allow read, create: if true;
+    }
   }
 }

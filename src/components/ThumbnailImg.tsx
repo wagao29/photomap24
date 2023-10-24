@@ -10,7 +10,7 @@ type Props = {
 };
 
 // TODO: iconStampLogo 差し替え
-const PhotoImg = memo(function StampImageBase({ src, size, onClick, className }: Props) {
+const ThumbnailImg = memo(function StampImageBase({ src, size, onClick, className }: Props) {
   return (
     <img
       src={src}
@@ -22,7 +22,8 @@ const PhotoImg = memo(function StampImageBase({ src, size, onClick, className }:
         backgroundSize: size,
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center center',
-        minWidth: size
+        minWidth: size,
+        borderRadius: '0.5rem'
       }}
       onLoad={(e: React.SyntheticEvent<HTMLImageElement>) => {
         e.currentTarget.style.backgroundImage = 'none';
@@ -32,9 +33,9 @@ const PhotoImg = memo(function StampImageBase({ src, size, onClick, className }:
         e.currentTarget.src = iconStampLogo;
       }}
       onClick={onClick}
-      alt='photo'
+      alt='thumbnail'
     />
   );
 });
 
-export default PhotoImg;
+export default ThumbnailImg;
