@@ -70,7 +70,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     if (isCluster) {
       const onClick = () => {
         if (mapRef.current?.getZoom() === MAX_ZOOM) {
-          const photos = supercluster
+          const photoIds = supercluster
             .getChildren(cluster.id)
             // 作成日時が新しい順に並び替える
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,12 +79,9 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
             })
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .map((point: any) => {
-              return {
-                id: point.properties.id
-              };
+              return point.properties.id;
             });
-          console.log(photos);
-          openDialog(<PhotoDialog photoId={photos[0].id} onClose={closeDialog} />);
+          openDialog(<PhotoDialog photoIds={photoIds} onClose={closeDialog} />);
         } else {
           mapRef.current?.flyTo({
             center: [longitude, latitude],
@@ -100,7 +97,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       );
     } else {
       const onClick = () => {
-        openDialog(<PhotoDialog photoId={cluster.properties.id} onClose={closeDialog} />);
+        openDialog(<PhotoDialog photoIds={[cluster.properties.id]} onClose={closeDialog} />);
       };
       return (
         <Marker
