@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Dialog } from './Dialog';
-import DialogCloseButton from './DialogCloseButton';
+import CloseButton from './CloseButton';
 
 type Props = {
   onClose: () => void;
@@ -9,7 +9,7 @@ type Props = {
 export const PrivacyDialog = memo(function PrivacyDialogBase({ onClose }: Props) {
   return (
     <Dialog height='80%'>
-      <DialogCloseButton onClick={onClose} />
+      <CloseButton onClick={onClose} />
       <div className='flex flex-col items-center h-full font-bold pb-4'>
         <h1 className='text-lg pt-6'>プライバシーポリシー</h1>
         <div className='overflow-scroll hidden-scrollbar p-2'>

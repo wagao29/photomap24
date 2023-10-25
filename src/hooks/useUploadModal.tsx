@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { createPhoto } from '../apis/createPhoto';
 import { fetchAddress } from '../apis/fetchAddress';
 import CommonButton from '../components/CommonButton';
-import DialogCloseButton from '../components/DialogCloseButton';
+import DialogCloseButton from '../components/CloseButton';
 import ImageInput from '../components/ImageInput';
 import Spinner from '../components/Spinner';
 import { Coordinates } from '../types';
