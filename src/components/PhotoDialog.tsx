@@ -34,11 +34,11 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoId, onClose }: P
   return (
     <Dialog height='80%'>
       <DialogCloseButton onClick={onClose} />
-      <div className='max-h-full overflow-scroll hidden-scrollbar rounded-lg border-2 border-gray-500 bg-white'>
-        <img src={getPhotoUrl(photoId)} />
-        <div className='flex justify-between p-2'>
-          <p>{photo.address}</p>
-          <p>{`views: ${photo.views}`}</p>
+      <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
+        <div className='relative h-full w-full'>
+          <img src={getPhotoUrl(photoId)} className='absolute inset-0 m-auto max-h-full' />
+          <p className='absolute bottom-2 left-2 text-white'>{photo.address}</p>
+          <p className='absolute bottom-2 right-2 text-white'>{`views: ${photo.views}`}</p>
         </div>
       </div>
     </Dialog>

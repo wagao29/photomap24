@@ -8,7 +8,7 @@ type Props = {
 const DialogCloseButton = memo(function DialogCloseButtonBase({ onClick }: Props) {
   return (
     <img
-      className='absolute top-3 right-3 hover:cursor-pointer'
+      className='absolute top-3 right-3 hover:cursor-pointer z-10'
       src={iconCloseButton}
       width={17}
       height={17}
