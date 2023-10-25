@@ -1,5 +1,5 @@
 import iconStampLogo from '../assets/icon_stamp_logo.png';
-import { MAX_MAP_PHOTO_COUNT } from '../constants';
+import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_SIZE } from '../constants';
 import { getThumbnailUrl } from '../utils/getThumbnailUrl';
 import ThumbnailImg from './ThumbnailImg';
 
@@ -51,7 +51,7 @@ const MapPhotoThumbnail = ({ points }: Props) => {
       <PhotoNumber points={points} />
       <ThumbnailImg
         src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconStampLogo}
-        size={100}
+        size={THUMBNAIL_SIZE}
         className=''
       />
     </div>

@@ -3,6 +3,7 @@ import { MapRef, Marker } from 'react-map-gl';
 import useSupercluster from 'use-supercluster';
 import { fetchMapPhotos } from '../apis/fetchMapPhotos';
 import MapPhotoThumbnail from '../components/MapPhotoThumbnail';
+import { PhotoDialog } from '../components/PhotoDialog';
 import {
   CLUSTER_RADIUS,
   DEFAULT_ZOOM,
@@ -10,9 +11,11 @@ import {
   MAX_ZOOM,
   MAX_ZOOM_DURATION
 } from '../constants';
+import { useDialogContext } from '../providers/DialogProvider';
 import { MapPhoto } from '../types';
 
 export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
+  const { openDialog, closeDialog } = useDialogContext();
   const [mapPhotos, setMapPhotos] = useState<MapPhoto[]>([]);
   const [bounds, setBounds] = useState<[number, number, number, number]>();
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
@@ -81,6 +84,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
               };
             });
           console.log(photos);
+          openDialog(<PhotoDialog photoId={photos[0].id} onClose={closeDialog} />);
         } else {
           mapRef.current?.flyTo({
             center: [longitude, latitude],
@@ -96,7 +100,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       );
     } else {
       const onClick = () => {
-        console.log(cluster.properties.id);
+        openDialog(<PhotoDialog photoId={cluster.properties.id} onClose={closeDialog} />);
       };
       return (
         <Marker
