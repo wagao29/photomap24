@@ -31,10 +31,7 @@ export const Dialog = ({ children, height }: Props) => {
           opacity: '0.5'
         }}
       ></div>
-      <div
-        style={{ height }}
-        className='absolute bg-white w-4/5 max-w-sm px-4 rounded-lg border-2 border-gray-500'
-      >
+      <div style={{ height }} className='absolute w-4/5 max-w-sm'>
         {children}
       </div>
     </div>

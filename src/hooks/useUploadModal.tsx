@@ -43,6 +43,7 @@ const useUploadModal = () => {
         new Compressor(e.target.files[0], {
           quality: 0.6,
           convertTypes: 'image/jpeg',
+          maxWidth: 380,
           success(result) {
             reader.readAsDataURL(result);
             setPhotoFile(result as File);
