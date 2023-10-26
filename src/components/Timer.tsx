@@ -9,6 +9,7 @@ const Timer = memo(function TimerBase({ initTime, className }: Props) {
   const [countTime, setCountTime] = useState<number>(initTime);
 
   useEffect(() => {
+    setCountTime(initTime);
     const countDownInterval = setInterval(() => {
       if (countTime > 0) {
         setCountTime((t) => t - 1);
@@ -19,7 +20,7 @@ const Timer = memo(function TimerBase({ initTime, className }: Props) {
     return () => {
       clearInterval(countDownInterval);
     };
-  }, []);
+  }, [initTime]);
 
   const hr = Math.floor(countTime / (60 * 60))
     .toString()
