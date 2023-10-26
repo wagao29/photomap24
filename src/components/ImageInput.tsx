@@ -6,14 +6,12 @@ type Props = {
   className: string;
 };
 
+const baseStyle = `p-2 border-2 border-white rounded-lg font-bold text-center text-white 
+active:bg-white active:text-black hover:bg-white hover:text-black hover:cursor-pointer`;
+
 const ImageInput = memo(function ImageInputBase({ onFileChange, className }: Props) {
   return (
-    <label
-      className={twMerge(
-        'text-xs text-gray-600 py-1 px-3 font-bold rounded-lg border-2 border-gray-600 active:bg-gray-200 hover:cursor-pointer',
-        className
-      )}
-    >
+    <label className={twMerge(baseStyle, className)}>
       Select Photo
       <input type='file' accept='image/*' onChange={onFileChange} style={{ display: 'none' }} />
     </label>
