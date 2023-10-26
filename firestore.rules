@@ -6,7 +6,7 @@ service cloud.firestore {
       return photo.size() == 4
       && 'address' in photo && photo.address is string
       && 'pos' in photo && photo.pos is latlng
-      && 'date' in photo && photo.date is timestamp
+      && 'createdAt' in photo && photo.createdAt is timestamp
       && 'views' in photo && photo.views is number && photo.views == 0;
     }
     

@@ -17,7 +17,8 @@ export const fetchPhoto = async (id: string): Promise<Photo | FetchError> => {
           latitude: docSnap.data().pos.latitude
         },
         address: docSnap.data().address,
-        date: docSnap.data().date.toDate(),
+        createdAt: docSnap.data().createdAt.toDate(),
+        expireAt: docSnap.data().expireAt.toDate(),
         views: docSnap.data().views
       } as Photo;
     } else {

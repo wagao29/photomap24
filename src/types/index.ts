@@ -19,8 +19,9 @@ export type Coordinates = {
 export type Photo = {
   id: string;
   pos: Coordinates;
-  date: Date;
   address: string;
+  createdAt: Date;
+  expireAt: Date;
   views: number;
 };
 

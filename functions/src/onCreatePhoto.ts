@@ -11,12 +11,17 @@ export const onCreatePhoto = functions
     const photoId = snap.id;
     const photoDoc = snap.data();
 
-    // mapPhotosに追加
+    // photo ドキュメントに expireAt を追加
+    const expireAt = new Date(photoDoc.createdAt.toDate().getTime() + 24 * 60 * 60 * 1000); // 24時間後
+    const photoDocRef = admin.firestore().doc(`version/${FIRESTORE_VERSION}/photos/${photoId}`);
+    await photoDocRef.set({ expireAt }, { merge: true });
+
+    // mapPhotos に追加
     const updatedDocData = {
       list: admin.firestore.FieldValue.arrayUnion({
         id: photoId,
         pos: photoDoc.pos,
-        date: photoDoc.date
+        date: photoDoc.createdAt
       })
     };
     const mapPhotosDocRef = admin
