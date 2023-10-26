@@ -8,6 +8,7 @@ import { Dialog } from './Dialog';
 import CloseButton from './CloseButton';
 import NextButton from './NextButton';
 import PrevButton from './PrevButton';
+import Timer from './Timer';
 
 type Props = {
   photoIds: string[];
@@ -42,6 +43,10 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, onClose }: 
 
   if (!photo) return null;
 
+  const initTime = Math.floor((photo.expireAt.getTime() - Date.now()) / 1000);
+
+  if (initTime < 0) return null;
+
   return (
     <Dialog height='80%'>
       <CloseButton onClick={onClose} />
@@ -49,7 +54,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, onClose }: 
       <NextButton onClick={onClickNextBtn} visible={currentIdx < photoIds.length - 1} />
       <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         <div className='relative h-full w-full'>
-          <p className='absolute top-2 left-2 text-white'>{photo.id}</p>
+          <Timer className='absolute top-2 left-2 text-white' initTime={initTime} />
           <img
             src={getPhotoUrl(photoIds[currentIdx])}
             className='absolute inset-0 m-auto max-h-full'
