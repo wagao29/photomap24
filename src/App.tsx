@@ -35,8 +35,13 @@ import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreatePhotoButton from './components/CreatePhotoButton';
-import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
+import {
+  toastCurrentPosError,
+  toastReloadMessage,
+  toastUploadPhotoMessage
+} from './utils/toastMessages';
 import { UploadDialog } from './components/UploadDialog';
+import ReloadButton from './components/ReloadButton';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -50,6 +55,9 @@ const App = () => {
   const [isReadyPos, setIsReadyPos] = useState<boolean>(false);
 
   const mapRef = useRef<MapRef>(null);
+  const reloadRef = useRef<boolean>(true);
+
+  const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
 
   const openUnsupportedErrorDialog = useCallback(() => {
     openDialog(
@@ -123,11 +131,10 @@ const App = () => {
           });
         }
       }
+      await updateMapPhotos();
       setIsReadyPos(true);
     })();
   }, []);
-
-  const { onMapLoad, PhotoMarkers } = useClusterPhotos(mapRef);
 
   const onClickCreate = async () => {
     if (mapRef.current && currentPos) {
@@ -171,6 +178,16 @@ const App = () => {
   const onOutOfMaxBounds = useCallback(() => {
     openOutOfBoundsErrorDialog();
   }, [openOutOfBoundsErrorDialog]);
+
+  const onClickReload = useCallback(async () => {
+    if (reloadRef.current) {
+      reloadRef.current = false;
+      toastReloadMessage();
+      updateMapPhotos();
+      await sleep(1.5);
+      reloadRef.current = true;
+    }
+  }, [updateMapPhotos, reloadRef.current]);
 
   if (!isReadyPos) {
     return <Spinner className='absolute inset-0 flex items-center justify-center' />;
@@ -222,6 +239,7 @@ const App = () => {
           onError={onError}
         />
       </Map>
+      <ReloadButton onClick={onClickReload} />
       <CreatePhotoButton onClick={onClickCreate} />
       <Toaster toastOptions={{ duration: 1500 }} />
     </div>

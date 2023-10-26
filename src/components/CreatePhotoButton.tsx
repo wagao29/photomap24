@@ -12,7 +12,7 @@ const CreatePhotoButton = ({ onClick }: Props) => {
       style={{
         position: 'absolute',
         right: '8px',
-        bottom: 'calc(80px + env(safe-area-inset-bottom, 20px))',
+        bottom: 'calc(30px + env(safe-area-inset-bottom, 20px))',
         zIndex: 10
       }}
     >
