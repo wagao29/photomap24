@@ -29,3 +29,10 @@ export const toastUploadPhotoFailed = () => {
     id: 'UploadPhotoFailed'
   });
 };
+
+export const toastReloadMessage = () => {
+  toast.loading('Reload', {
+    className,
+    id: 'ReloadMessage'
+  });
+};

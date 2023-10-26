@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MapRef, Marker } from 'react-map-gl';
 import useSupercluster from 'use-supercluster';
 import { fetchMapPhotos } from '../apis/fetchMapPhotos';
@@ -20,11 +20,9 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
   const [bounds, setBounds] = useState<[number, number, number, number]>();
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
 
-  useEffect(() => {
-    (async () => {
-      const fetchedMapPhotos = await fetchMapPhotos();
-      setMapPhotos(fetchedMapPhotos);
-    })();
+  const updateMapPhotos = useCallback(async () => {
+    const fetchedMapPhotos = await fetchMapPhotos();
+    setMapPhotos(fetchedMapPhotos);
   }, []);
 
   const updateMap = useCallback(() => {
@@ -112,5 +110,5 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     }
   });
 
-  return { onMapLoad, PhotoMarkers };
+  return { onMapLoad, updateMapPhotos, PhotoMarkers };
 };

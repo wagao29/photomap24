@@ -7,7 +7,7 @@ type Props = {
 };
 
 const baseStyle =
-  'p-2 font-bold rounded-lg border-2 bg-cyan-500 text-white active:bg-cyan-400 hover:bg-cyan-400';
+  'p-2 font-bold rounded-lg border-2 bg-cyan-400 text-white active:bg-cyan-500 hover:bg-cyan-500';
 
 const UploadButton = memo(function UploadButtonBase({ className, onClick }: Props) {
   return (
