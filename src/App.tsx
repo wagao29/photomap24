@@ -35,12 +35,11 @@ import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreatePhotoButton from './components/CreatePhotoButton';
-import useUploadModal from './hooks/useUploadModal';
-import { toastCreatePhotoAtCurrentPos, toastCurrentPosError } from './utils/toastMessages';
+import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
+import { UploadDialog } from './components/UploadDialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
-  const { UploadModal, openUploadModal } = useUploadModal();
 
   const [currentPos, setCurrentPos] = useState<Coordinates>();
   const [mapState, setMapState] = useState<MapState>({
@@ -136,9 +135,9 @@ const App = () => {
         center: [currentPos.longitude, currentPos.latitude],
         zoom: MAX_ZOOM
       });
-      toastCreatePhotoAtCurrentPos();
+      toastUploadPhotoMessage();
       await sleep(1.5);
-      openUploadModal();
+      openDialog(<UploadDialog currentPos={currentPos} onClose={closeDialog} />);
     } else {
       toastCurrentPosError();
     }
@@ -225,7 +224,6 @@ const App = () => {
       </Map>
       <CreatePhotoButton onClick={onClickCreate} />
       <Toaster toastOptions={{ duration: 1500 }} />
-      <UploadModal currentPos={currentPos} />
     </div>
   );
 };
