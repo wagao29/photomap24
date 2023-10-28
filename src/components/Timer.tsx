@@ -1,26 +1,31 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   initTime: number;
+  onExpire: () => void;
   className: string;
 };
 
-const Timer = memo(function TimerBase({ initTime, className }: Props) {
+const Timer = ({ initTime, onExpire, className }: Props) => {
   const [countTime, setCountTime] = useState<number>(initTime);
+  const timerRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
     setCountTime(initTime);
-    const countDownInterval = setInterval(() => {
-      if (countTime > 0) {
-        setCountTime((t) => t - 1);
-      } else {
-        clearInterval(countDownInterval);
-      }
+    timerRef.current = setInterval(() => {
+      setCountTime((t) => t - 1);
     }, 1000);
     return () => {
-      clearInterval(countDownInterval);
+      clearInterval(timerRef.current);
     };
   }, [initTime]);
+
+  useEffect(() => {
+    if (countTime <= 0) {
+      clearInterval(timerRef.current);
+      onExpire();
+    }
+  }, [countTime]);
 
   const hr = Math.floor(countTime / (60 * 60))
     .toString()
@@ -30,11 +35,15 @@ const Timer = memo(function TimerBase({ initTime, className }: Props) {
     .padStart(2, '0');
   const sec = (countTime % 60).toString().padStart(2, '0');
 
-  return (
-    <p className={className}>
-      expires: {hr}:{min}:{sec}
-    </p>
-  );
-});
+  if (countTime <= 0) {
+    return <p className={className}>expired</p>;
+  } else {
+    return (
+      <p className={className}>
+        expires: {hr}:{min}:{sec}
+      </p>
+    );
+  }
+};
 
 export default Timer;

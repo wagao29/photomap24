@@ -2,6 +2,7 @@ import { db } from '../firebase';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { FIRESTORE_VERSION, MAP_PHOTOS_DOCUMENT_ID } from '../constants';
 import { MapPhoto } from '../types';
+import { getRemainingTime } from '../utils/getRemainingTime';
 
 export const fetchMapPhotos = async (): Promise<MapPhoto[]> => {
   console.debug('[API] fetchMapPhotos');
@@ -13,7 +14,7 @@ export const fetchMapPhotos = async (): Promise<MapPhoto[]> => {
     );
     const docSnap = await getDoc(photoDocRef);
     if (docSnap.exists()) {
-      const MapPhotos: MapPhoto[] = docSnap
+      const mapPhotos: MapPhoto[] = docSnap
         .data()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .list.map((doc: any) => {
@@ -29,8 +30,12 @@ export const fetchMapPhotos = async (): Promise<MapPhoto[]> => {
           }
           return null;
         })
-        .filter((MapPhoto: MapPhoto | null) => !!MapPhoto);
-      return MapPhotos;
+        .filter(
+          // expired の photo は表示しないようフィルタリング
+          (mapPhoto: MapPhoto | null) =>
+            !!mapPhoto && getRemainingTime(mapPhoto.date.getTime() + 24 * 60 * 60 * 1000) > 0
+        );
+      return mapPhotos;
     }
     return [];
   } catch (error) {
