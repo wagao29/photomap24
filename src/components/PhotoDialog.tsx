@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { fetchPhoto } from '../apis/fetchPhoto';
-import { viewPhoto } from '../apis/viewPhoto';
 import { FETCH_ERROR_NOT_EXISTS, FETCH_ERROR_OTHERS, MAX_ZOOM } from '../constants';
 import { Photo } from '../types';
 import { getPhotoUrl } from '../utils/getPhotoUrl';
@@ -34,7 +33,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
       } else if (result === FETCH_ERROR_OTHERS) {
         onClose();
       } else {
-        setPhoto({ ...result, views: result.views + 1 });
+        setPhoto(result);
         if (mapRef.current) {
           mapRef.current.jumpTo({
             center: [result.pos.longitude, result.pos.latitude],
@@ -42,7 +41,6 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
           });
         }
         setRemainingTime(getRemainingTime(result.createdAt));
-        viewPhoto(photoIds[currentIdx]);
       }
     })();
   }, [currentIdx, mapRef.current]);
@@ -81,8 +79,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
               className='absolute inset-0 m-auto max-h-full'
             />
           )}
-          <p className='absolute z-10 bottom-2 left-2 text-white'>{photo.address}</p>
-          <p className='absolute z-10 bottom-2 right-2 text-white'>{`views: ${photo.views}`}</p>
+          <p className='absolute z-10 bottom-2 right-2 text-white'>{photo.address}</p>
         </div>
       </div>
     </Dialog>

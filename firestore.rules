@@ -1,28 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-        
+
     function isValidPhoto(photo) {
-      return photo.size() == 4
+      return photo.size() == 3
       && 'address' in photo && photo.address is string
       && 'pos' in photo && photo.pos is latlng
       && 'createdAt' in photo && photo.createdAt is timestamp
-      && 'views' in photo && photo.views is number && photo.views == 0;
     }
-    
-    function isValidViews() {
-    	return request.resource.data.views >= 0
-      && (request.resource.data.views == resource.data.views + 1
-      || request.resource.data.views == resource.data.views - 1);
-    }
-        
+
     match /version/{versionId} {
       match /photos/{photoId} {
       	allow read: if true;
       	allow create: if isValidPhoto(request.resource.data);
-        allow update: if (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views'])) && isValidViews();
       }
-      
       match /mapPhotos/{mapPhotosId} {
       	allow read: if true;
       }
