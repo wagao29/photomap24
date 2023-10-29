@@ -63,7 +63,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, setMapPos, 
       <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         <div className='relative h-full w-full'>
           <Timer
-            className='absolute top-2 left-2 text-white'
+            className='absolute z-10 top-2 left-2 text-white'
             initTime={remainingTime}
             onExpire={onExpire}
           />
@@ -75,8 +75,8 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, setMapPos, 
               className='absolute inset-0 m-auto max-h-full'
             />
           )}
-          <p className='absolute bottom-2 left-2 text-white'>{photo.address}</p>
-          <p className='absolute bottom-2 right-2 text-white'>{`views: ${photo.views}`}</p>
+          <p className='absolute z-10 bottom-2 left-2 text-white'>{photo.address}</p>
+          <p className='absolute z-10 bottom-2 right-2 text-white'>{`views: ${photo.views}`}</p>
         </div>
       </div>
     </Dialog>
