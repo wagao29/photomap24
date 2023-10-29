@@ -26,7 +26,7 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [photoFile, setPhotoFile] = useState<File>();
 
-  const { openDialog, closeDialog } = useDialogContext();
+  const { openDialog } = useDialogContext();
 
   const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -60,9 +60,8 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
       const address = await fetchAddress(currentPos.latitude, currentPos.longitude);
       const photoId = await createPhoto(photoFile, thumbnailBlob, currentPos, address);
       toastUploadPhotoSuccess();
-      onClose();
       setIsLoading(false);
-      openDialog(<PhotoDialog photoIds={[photoId]} mapRef={mapRef} onClose={closeDialog} />);
+      openDialog(<PhotoDialog photoIds={[photoId]} mapRef={mapRef} onClose={onClose} />);
     } catch (error) {
       console.error(error);
       toastUploadPhotoFailed();

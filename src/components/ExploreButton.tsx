@@ -12,7 +12,7 @@ const ExploreButton = ({ onClick }: Props) => {
       style={{
         position: 'absolute',
         right: '8px',
-        bottom: 'calc(165px + env(safe-area-inset-bottom, 20px))',
+        bottom: 'calc(95px + env(safe-area-inset-bottom, 20px))',
         zIndex: 10
       }}
     >

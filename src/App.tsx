@@ -36,13 +36,8 @@ import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreatePhotoButton from './components/CreatePhotoButton';
-import {
-  toastCurrentPosError,
-  toastReloadMessage,
-  toastUploadPhotoMessage
-} from './utils/toastMessages';
+import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
 import { UploadDialog } from './components/UploadDialog';
-import ReloadButton from './components/ReloadButton';
 import ExploreButton from './components/ExploreButton';
 import { fetchNewPhotos } from './apis/fetchNewPhotos';
 import { PhotoDialog } from './components/PhotoDialog';
@@ -59,7 +54,6 @@ const App = () => {
   const [isReadyPos, setIsReadyPos] = useState<boolean>(false);
 
   const mapRef = useRef<MapRef>(null);
-  const reloadRef = useRef<boolean>(true);
 
   const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
 
@@ -140,6 +134,11 @@ const App = () => {
     })();
   }, []);
 
+  const onCloseDialog = useCallback(() => {
+    updateMapPhotos();
+    closeDialog();
+  }, [updateMapPhotos, closeDialog]);
+
   const onClickCreate = async () => {
     if (mapRef.current && currentPos) {
       mapRef.current.jumpTo({
@@ -148,7 +147,7 @@ const App = () => {
       });
       toastUploadPhotoMessage();
       await sleep(1.5);
-      openDialog(<UploadDialog currentPos={currentPos} mapRef={mapRef} onClose={closeDialog} />);
+      openDialog(<UploadDialog currentPos={currentPos} mapRef={mapRef} onClose={onCloseDialog} />);
     } else {
       toastCurrentPosError();
     }
@@ -183,22 +182,11 @@ const App = () => {
     openOutOfBoundsErrorDialog();
   }, [openOutOfBoundsErrorDialog]);
 
-  const onClickReload = useCallback(async () => {
-    if (reloadRef.current) {
-      reloadRef.current = false;
-      toastReloadMessage();
-      updateMapPhotos();
-      await sleep(1.5);
-      reloadRef.current = true;
-    }
-  }, [updateMapPhotos, reloadRef.current]);
-
   const onClickExploreButton = useCallback(async () => {
-    await updateMapPhotos();
     const photos = await fetchNewPhotos(new Date(), FETCH_NEW_PHOTOS_SIZE);
     const photoIds = photos.map((photo) => photo.id);
-    openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={closeDialog} />);
-  }, [mapRef.current, openDialog, PhotoDialog]);
+    openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
+  }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
   if (!isReadyPos) {
     return <Spinner className='absolute inset-0 flex items-center justify-center' />;
@@ -251,7 +239,6 @@ const App = () => {
         />
       </Map>
       <ExploreButton onClick={onClickExploreButton} />
-      <ReloadButton onClick={onClickReload} />
       <CreatePhotoButton onClick={onClickCreate} />
       <Toaster toastOptions={{ duration: 1500 }} />
     </div>
