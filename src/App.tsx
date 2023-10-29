@@ -5,6 +5,7 @@ import {
   DEFAULT_ZOOM,
   DIALOG_ERROR,
   EAST_POINT,
+  FETCH_NEW_PHOTOS_SIZE,
   GEO_ERROR_OTHERS,
   GEO_ERROR_OUT_OF_BOUNDS,
   GEO_ERROR_PERMISSION,
@@ -42,6 +43,9 @@ import {
 } from './utils/toastMessages';
 import { UploadDialog } from './components/UploadDialog';
 import ReloadButton from './components/ReloadButton';
+import ExploreButton from './components/ExploreButton';
+import { fetchNewPhotos } from './apis/fetchNewPhotos';
+import { PhotoDialog } from './components/PhotoDialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -189,6 +193,20 @@ const App = () => {
     }
   }, [updateMapPhotos, reloadRef.current]);
 
+  const onClickExploreButton = useCallback(async () => {
+    const photos = await fetchNewPhotos(new Date(), FETCH_NEW_PHOTOS_SIZE);
+    const photoIds = photos.map((photo) => photo.id);
+    const setMapPos = (pos: Coordinates) => {
+      if (mapRef.current) {
+        mapRef.current.jumpTo({
+          center: [pos.longitude, pos.latitude],
+          zoom: MAX_ZOOM
+        });
+      }
+    };
+    openDialog(<PhotoDialog photoIds={photoIds} onClose={closeDialog} setMapPos={setMapPos} />);
+  }, [mapRef.current, openDialog, PhotoDialog]);
+
   if (!isReadyPos) {
     return <Spinner className='absolute inset-0 flex items-center justify-center' />;
   }
@@ -239,6 +257,7 @@ const App = () => {
           onError={onError}
         />
       </Map>
+      <ExploreButton onClick={onClickExploreButton} />
       <ReloadButton onClick={onClickReload} />
       <CreatePhotoButton onClick={onClickCreate} />
       <Toaster toastOptions={{ duration: 1500 }} />

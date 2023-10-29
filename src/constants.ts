@@ -23,6 +23,8 @@ export const CLUSTER_RADIUS = 100;
 
 export const THUMBNAIL_SIZE = 100;
 
+export const FETCH_NEW_PHOTOS_SIZE = 10;
+
 // ダイアログ種別
 export const DIALOG_CONFIRM = 'dialog_confirm';
 export const DIALOG_DELETE = 'dialog_delete';
