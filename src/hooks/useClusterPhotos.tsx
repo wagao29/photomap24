@@ -40,6 +40,11 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     }
   }, [updateMap]);
 
+  const onCloseDialog = useCallback(() => {
+    updateMapPhotos();
+    closeDialog();
+  }, [updateMap, closeDialog]);
+
   const points = mapPhotos.map((mapPhoto) => ({
     type: 'Feature',
     properties: { cluster: false, ...mapPhoto },
@@ -72,7 +77,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
           .map((point: any) => {
             return point.properties.id;
           });
-        openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={closeDialog} />);
+        openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -82,7 +87,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     } else {
       const onClick = () => {
         openDialog(
-          <PhotoDialog photoIds={[cluster.properties.id]} mapRef={mapRef} onClose={closeDialog} />
+          <PhotoDialog photoIds={[cluster.properties.id]} mapRef={mapRef} onClose={onCloseDialog} />
         );
       };
       return (
