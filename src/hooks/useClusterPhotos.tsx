@@ -4,13 +4,7 @@ import useSupercluster from 'use-supercluster';
 import { fetchMapPhotos } from '../apis/fetchMapPhotos';
 import MapPhotoThumbnail from '../components/MapPhotoThumbnail';
 import { PhotoDialog } from '../components/PhotoDialog';
-import {
-  CLUSTER_RADIUS,
-  DEFAULT_ZOOM,
-  MAX_MAP_PHOTO_COUNT,
-  MAX_ZOOM,
-  MAX_ZOOM_DIALOG_BG
-} from '../constants';
+import { CLUSTER_RADIUS, DEFAULT_ZOOM, MAX_MAP_PHOTO_COUNT, MAX_ZOOM } from '../constants';
 import { useDialogContext } from '../providers/DialogProvider';
 import { Coordinates, MapPhoto } from '../types';
 
@@ -51,7 +45,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       if (mapRef.current) {
         mapRef.current.jumpTo({
           center: [pos.longitude, pos.latitude],
-          zoom: MAX_ZOOM_DIALOG_BG
+          zoom: MAX_ZOOM
         });
       }
     },
@@ -90,16 +84,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
           .map((point: any) => {
             return point.properties.id;
           });
-        const center = mapRef.current?.getCenter();
-        const zoom = mapRef.current?.getZoom();
-        const onClose = () => {
-          closeDialog();
-          mapRef.current?.jumpTo({
-            center: center,
-            zoom: zoom
-          });
-        };
-        openDialog(<PhotoDialog photoIds={photoIds} setMapPos={setMapPos} onClose={onClose} />);
+        openDialog(<PhotoDialog photoIds={photoIds} setMapPos={setMapPos} onClose={closeDialog} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -108,17 +93,12 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       );
     } else {
       const onClick = () => {
-        const center = mapRef.current?.getCenter();
-        const zoom = mapRef.current?.getZoom();
-        const onClose = () => {
-          closeDialog();
-          mapRef.current?.jumpTo({
-            center: center,
-            zoom: zoom
-          });
-        };
         openDialog(
-          <PhotoDialog photoIds={[cluster.properties.id]} setMapPos={setMapPos} onClose={onClose} />
+          <PhotoDialog
+            photoIds={[cluster.properties.id]}
+            setMapPos={setMapPos}
+            onClose={closeDialog}
+          />
         );
       };
       return (
