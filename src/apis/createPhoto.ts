@@ -24,8 +24,7 @@ export const createPhoto = async (
   await setDoc(photosCollectionRef, {
     pos: new GeoPoint(pos.latitude, pos.longitude),
     address: address,
-    createdAt: serverTimestamp(),
-    views: 0
+    createdAt: serverTimestamp()
   });
 
   return photosCollectionRef.id;

@@ -21,7 +21,6 @@ export type Photo = {
   pos: Coordinates;
   address: string;
   createdAt: Date;
-  views: number;
 };
 
 export type MapPhoto = {

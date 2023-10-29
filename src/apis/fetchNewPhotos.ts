@@ -26,8 +26,7 @@ export const fetchNewPhotos = async (lastDate: Date, fetchLength: number): Promi
             latitude: doc.data().pos.latitude
           },
           address: doc.data().address,
-          createdAt: doc.data().createdAt.toDate(),
-          views: doc.data().views
+          createdAt: doc.data().createdAt.toDate()
         } as Photo;
       })
     );
