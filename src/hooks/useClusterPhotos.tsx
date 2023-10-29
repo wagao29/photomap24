@@ -9,10 +9,10 @@ import {
   DEFAULT_ZOOM,
   MAX_MAP_PHOTO_COUNT,
   MAX_ZOOM,
-  MAX_ZOOM_DURATION
+  MAX_ZOOM_DIALOG_BG
 } from '../constants';
 import { useDialogContext } from '../providers/DialogProvider';
-import { MapPhoto } from '../types';
+import { Coordinates, MapPhoto } from '../types';
 
 export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -46,6 +46,18 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     }
   }, [updateMap]);
 
+  const setMapPos = useCallback(
+    (pos: Coordinates) => {
+      if (mapRef.current) {
+        mapRef.current.jumpTo({
+          center: [pos.longitude, pos.latitude],
+          zoom: MAX_ZOOM_DIALOG_BG
+        });
+      }
+    },
+    [mapRef.current]
+  );
+
   const points = mapPhotos.map((mapPhoto) => ({
     type: 'Feature',
     properties: { cluster: false, ...mapPhoto },
@@ -67,26 +79,27 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     const { cluster: isCluster } = cluster.properties;
     if (isCluster) {
       const onClick = () => {
-        if (mapRef.current?.getZoom() === MAX_ZOOM) {
-          const photoIds = supercluster
-            .getChildren(cluster.id)
-            // 作成日時が新しい順に並び替える
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .sort((pointA: any, pointB: any) => {
-              return pointA.properties.date > pointB.properties.date ? -1 : 1;
-            })
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .map((point: any) => {
-              return point.properties.id;
-            });
-          openDialog(<PhotoDialog photoIds={photoIds} onClose={closeDialog} />);
-        } else {
-          mapRef.current?.flyTo({
-            center: [longitude, latitude],
-            zoom: Math.min(supercluster.getClusterExpansionZoom(cluster.id), MAX_ZOOM),
-            maxDuration: MAX_ZOOM_DURATION
+        const photoIds = supercluster
+          .getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)
+          // 作成日時が新しい順に並び替える
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .sort((pointA: any, pointB: any) => {
+            return pointA.properties.date > pointB.properties.date ? -1 : 1;
+          })
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((point: any) => {
+            return point.properties.id;
           });
-        }
+        const center = mapRef.current?.getCenter();
+        const zoom = mapRef.current?.getZoom();
+        const onClose = () => {
+          closeDialog();
+          mapRef.current?.jumpTo({
+            center: center,
+            zoom: zoom
+          });
+        };
+        openDialog(<PhotoDialog photoIds={photoIds} setMapPos={setMapPos} onClose={onClose} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -95,7 +108,18 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       );
     } else {
       const onClick = () => {
-        openDialog(<PhotoDialog photoIds={[cluster.properties.id]} onClose={closeDialog} />);
+        const center = mapRef.current?.getCenter();
+        const zoom = mapRef.current?.getZoom();
+        const onClose = () => {
+          closeDialog();
+          mapRef.current?.jumpTo({
+            center: center,
+            zoom: zoom
+          });
+        };
+        openDialog(
+          <PhotoDialog photoIds={[cluster.properties.id]} setMapPos={setMapPos} onClose={onClose} />
+        );
       };
       return (
         <Marker
