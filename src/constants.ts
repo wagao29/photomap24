@@ -12,6 +12,7 @@ export const DEFAULT_ZOOM = 16;
 export const MAX_ZOOM = 18;
 export const MIN_ZOOM = 4;
 export const MAX_ZOOM_DURATION = 1000;
+export const MAX_ZOOM_DIALOG_BG = 15;
 export const WEST_POINT = 122;
 export const EAST_POINT = 155;
 export const SOUTH_POINT = 20;
