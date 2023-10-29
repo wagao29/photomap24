@@ -148,7 +148,7 @@ const App = () => {
       });
       toastUploadPhotoMessage();
       await sleep(1.5);
-      openDialog(<UploadDialog currentPos={currentPos} onClose={closeDialog} />);
+      openDialog(<UploadDialog currentPos={currentPos} mapRef={mapRef} onClose={closeDialog} />);
     } else {
       toastCurrentPosError();
     }
@@ -194,17 +194,10 @@ const App = () => {
   }, [updateMapPhotos, reloadRef.current]);
 
   const onClickExploreButton = useCallback(async () => {
+    await updateMapPhotos();
     const photos = await fetchNewPhotos(new Date(), FETCH_NEW_PHOTOS_SIZE);
     const photoIds = photos.map((photo) => photo.id);
-    const setMapPos = (pos: Coordinates) => {
-      if (mapRef.current) {
-        mapRef.current.jumpTo({
-          center: [pos.longitude, pos.latitude],
-          zoom: MAX_ZOOM
-        });
-      }
-    };
-    openDialog(<PhotoDialog photoIds={photoIds} onClose={closeDialog} setMapPos={setMapPos} />);
+    openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={closeDialog} />);
   }, [mapRef.current, openDialog, PhotoDialog]);
 
   if (!isReadyPos) {

@@ -21,7 +21,6 @@ export type Photo = {
   pos: Coordinates;
   address: string;
   createdAt: Date;
-  expireAt: Date;
   views: number;
 };
 

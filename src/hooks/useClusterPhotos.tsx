@@ -6,7 +6,7 @@ import MapPhotoThumbnail from '../components/MapPhotoThumbnail';
 import { PhotoDialog } from '../components/PhotoDialog';
 import { CLUSTER_RADIUS, DEFAULT_ZOOM, MAX_MAP_PHOTO_COUNT, MAX_ZOOM } from '../constants';
 import { useDialogContext } from '../providers/DialogProvider';
-import { Coordinates, MapPhoto } from '../types';
+import { MapPhoto } from '../types';
 
 export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -40,18 +40,6 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     }
   }, [updateMap]);
 
-  const setMapPos = useCallback(
-    (pos: Coordinates) => {
-      if (mapRef.current) {
-        mapRef.current.jumpTo({
-          center: [pos.longitude, pos.latitude],
-          zoom: MAX_ZOOM
-        });
-      }
-    },
-    [mapRef.current]
-  );
-
   const points = mapPhotos.map((mapPhoto) => ({
     type: 'Feature',
     properties: { cluster: false, ...mapPhoto },
@@ -84,7 +72,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
           .map((point: any) => {
             return point.properties.id;
           });
-        openDialog(<PhotoDialog photoIds={photoIds} setMapPos={setMapPos} onClose={closeDialog} />);
+        openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={closeDialog} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -94,11 +82,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     } else {
       const onClick = () => {
         openDialog(
-          <PhotoDialog
-            photoIds={[cluster.properties.id]}
-            setMapPos={setMapPos}
-            onClose={closeDialog}
-          />
+          <PhotoDialog photoIds={[cluster.properties.id]} mapRef={mapRef} onClose={closeDialog} />
         );
       };
       return (

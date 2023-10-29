@@ -9,7 +9,7 @@ export const createPhoto = async (
   thumbnailBlob: Blob,
   pos: Coordinates,
   address: string
-): Promise<void> => {
+): Promise<string> => {
   console.debug('[API] createPhoto');
 
   const photosCollectionRef = doc(collection(db, `version/${FIRESTORE_VERSION}/photos`));
@@ -27,4 +27,6 @@ export const createPhoto = async (
     createdAt: serverTimestamp(),
     views: 0
   });
+
+  return photosCollectionRef.id;
 };

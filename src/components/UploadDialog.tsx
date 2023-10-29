@@ -11,16 +11,22 @@ import Spinner from './Spinner';
 import { toastUploadPhotoFailed, toastUploadPhotoSuccess } from '../utils/toastMessages';
 import iconPhoto from '../assets/icon_photo.svg';
 import UploadButton from './UploadButton';
+import { MapRef } from 'react-map-gl';
+import { useDialogContext } from '../providers/DialogProvider';
+import { PhotoDialog } from './PhotoDialog';
 
 type Props = {
   currentPos: Coordinates;
+  mapRef: React.RefObject<MapRef>;
   onClose: () => void;
 };
 
-export const UploadDialog = memo(function UploadDialogBase({ currentPos, onClose }: Props) {
+export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef, onClose }: Props) {
   const [imgUrl, setImgUrl] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [photoFile, setPhotoFile] = useState<File>();
+
+  const { openDialog, closeDialog } = useDialogContext();
 
   const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -52,14 +58,16 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, onClose
       setIsLoading(true);
       const thumbnailBlob = await generateThumbnail(photoFile);
       const address = await fetchAddress(currentPos.latitude, currentPos.longitude);
-      await createPhoto(photoFile, thumbnailBlob, currentPos, address);
+      const photoId = await createPhoto(photoFile, thumbnailBlob, currentPos, address);
       toastUploadPhotoSuccess();
+      onClose();
+      setIsLoading(false);
+      openDialog(<PhotoDialog photoIds={[photoId]} mapRef={mapRef} onClose={closeDialog} />);
     } catch (error) {
       console.error(error);
       toastUploadPhotoFailed();
-    } finally {
-      setIsLoading(false);
       onClose();
+      setIsLoading(false);
     }
   }, [currentPos, photoFile]);
 
