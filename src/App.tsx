@@ -5,7 +5,6 @@ import {
   DEFAULT_ZOOM,
   DIALOG_ERROR,
   EAST_POINT,
-  FETCH_NEW_PHOTOS_SIZE,
   GEO_ERROR_OTHERS,
   GEO_ERROR_OUT_OF_BOUNDS,
   GEO_ERROR_PERMISSION,
@@ -39,8 +38,8 @@ import CreatePhotoButton from './components/CreatePhotoButton';
 import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
 import { UploadDialog } from './components/UploadDialog';
 import ExploreButton from './components/ExploreButton';
-import { fetchNewPhotos } from './apis/fetchNewPhotos';
 import { PhotoDialog } from './components/PhotoDialog';
+import { fetchMapPhotos } from './apis/fetchMapPhotos';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -183,8 +182,8 @@ const App = () => {
   }, [openOutOfBoundsErrorDialog]);
 
   const onClickExploreButton = useCallback(async () => {
-    const photos = await fetchNewPhotos(new Date(), FETCH_NEW_PHOTOS_SIZE);
-    const photoIds = photos.map((photo) => photo.id);
+    const mapPhotos = await fetchMapPhotos();
+    const photoIds = mapPhotos.map((mapPhoto) => mapPhoto.id).reverse();
     openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
   }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
