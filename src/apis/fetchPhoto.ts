@@ -18,7 +18,6 @@ export const fetchPhoto = async (id: string): Promise<Photo | FetchError> => {
         },
         address: docSnap.data().address,
         createdAt: docSnap.data().createdAt.toDate(),
-        expireAt: docSnap.data().expireAt.toDate(),
         views: docSnap.data().views
       } as Photo;
     } else {

@@ -1,3 +1,3 @@
-export const getRemainingTime = (expireAt: number): number => {
-  return Math.floor((expireAt - Date.now()) / 1000);
+export const getRemainingTime = (createdAt: Date): number => {
+  return Math.floor((createdAt.getTime() + 24 * 60 * 60 * 1000 - Date.now()) / 1000);
 };

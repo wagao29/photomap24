@@ -27,14 +27,13 @@ export const fetchNewPhotos = async (lastDate: Date, fetchLength: number): Promi
           },
           address: doc.data().address,
           createdAt: doc.data().createdAt.toDate(),
-          expireAt: doc.data().expireAt.toDate(),
           views: doc.data().views
         } as Photo;
       })
     );
     const photos = result.filter(
       // expired の photo は表示しないようフィルタリング
-      (photo: Photo) => !!photo && getRemainingTime(photo.expireAt.getTime()) > 0
+      (photo: Photo) => !!photo && getRemainingTime(photo.createdAt) > 0
     );
     return photos;
   } catch (error) {

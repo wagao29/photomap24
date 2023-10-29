@@ -1,8 +1,8 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { fetchPhoto } from '../apis/fetchPhoto';
 import { viewPhoto } from '../apis/viewPhoto';
-import { FETCH_ERROR_NOT_EXISTS, FETCH_ERROR_OTHERS } from '../constants';
-import { Coordinates, Photo } from '../types';
+import { FETCH_ERROR_NOT_EXISTS, FETCH_ERROR_OTHERS, MAX_ZOOM } from '../constants';
+import { Photo } from '../types';
 import { getPhotoUrl } from '../utils/getPhotoUrl';
 import { Dialog } from './Dialog';
 import CloseButton from './CloseButton';
@@ -11,14 +11,15 @@ import PrevButton from './PrevButton';
 import Timer from './Timer';
 import iconPhoto from '../assets/icon_photo.svg';
 import { getRemainingTime } from '../utils/getRemainingTime';
+import { MapRef } from 'react-map-gl';
 
 type Props = {
   photoIds: string[];
-  setMapPos: (pos: Coordinates) => void;
+  mapRef: React.RefObject<MapRef>;
   onClose: () => void;
 };
 
-export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, setMapPos, onClose }: Props) {
+export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onClose }: Props) {
   const [photo, setPhoto] = useState<Photo>();
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(0);
@@ -34,12 +35,17 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, setMapPos, 
         onClose();
       } else {
         setPhoto({ ...result, views: result.views + 1 });
-        setMapPos(result.pos);
-        setRemainingTime(getRemainingTime(result.expireAt.getTime()));
+        if (mapRef.current) {
+          mapRef.current.jumpTo({
+            center: [result.pos.longitude, result.pos.latitude],
+            zoom: MAX_ZOOM
+          });
+        }
+        setRemainingTime(getRemainingTime(result.createdAt));
         viewPhoto(photoIds[currentIdx]);
       }
     })();
-  }, [currentIdx]);
+  }, [currentIdx, mapRef.current]);
 
   const onClickPrevBtn = useCallback(() => {
     setCurrentIdx((idx) => idx - 1);
