@@ -34,7 +34,7 @@ import Spinner from './components/Spinner';
 import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
-import CreatePhotoButton from './components/CreatePhotoButton';
+import CreateButton from './components/CreateButton';
 import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
 import { UploadDialog } from './components/UploadDialog';
 import ExploreButton from './components/ExploreButton';
@@ -253,7 +253,7 @@ const App = () => {
         />
       </Map>
       <ExploreButton onClick={onClickExploreButton} />
-      <CreatePhotoButton onClick={onClickCreate} />
+      <CreateButton onClick={onClickCreate} />
       <Footer
         onClickHowToUse={openHowToUseDialog}
         onClickTerms={openTermsDialog}
