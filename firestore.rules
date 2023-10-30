@@ -4,14 +4,13 @@ service cloud.firestore {
 
     function isValidPhoto(photo) {
       return photo.size() == 3
-      && 'address' in photo && photo.address is string
+      && 'addr' in photo && photo.addr is string
       && 'pos' in photo && photo.pos is latlng
       && 'createdAt' in photo && photo.createdAt is timestamp
     }
 
     match /version/{versionId} {
       match /photos/{photoId} {
-      	allow read: if true;
       	allow create: if isValidPhoto(request.resource.data);
       }
       match /mapPhotos/{mapPhotosId} {

@@ -16,6 +16,7 @@ export const onDeletePhoto = functions
       list: admin.firestore.FieldValue.arrayRemove({
         id: photoId,
         pos: photoDoc.pos,
+        addr: photoDoc.addr,
         date: photoDoc.createdAt
       })
     };

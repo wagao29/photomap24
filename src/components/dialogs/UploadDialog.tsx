@@ -67,7 +67,13 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
       const photoId = await createPhoto(photoFile, thumbnailBlob, currentPos, address);
       toastUploadPhotoSuccess();
       setIsLoading(false);
-      openDialog(<PhotoDialog photoIds={[photoId]} mapRef={mapRef} onClose={onClose} />);
+      openDialog(
+        <PhotoDialog
+          mapPhotos={[{ id: photoId, pos: currentPos, addr: address, date: new Date() }]}
+          mapRef={mapRef}
+          onClose={onClose}
+        />
+      );
     } catch (error) {
       console.error(error);
       toastUploadPhotoFailed();
