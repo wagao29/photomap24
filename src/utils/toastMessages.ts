@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-const className = 'border-2 border-gray-600 text-gray-600 font-bold';
+const className = 'border-2 border-gray-600 text-gray-600 font-bold text-sm';
 
 export const toastCurrentPosError = () => {
   toast.error('Unable to obtain current location', {
