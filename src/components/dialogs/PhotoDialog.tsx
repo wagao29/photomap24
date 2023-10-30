@@ -16,6 +16,7 @@ import Timer from '../templates/Timer';
 import iconPhoto from '../../assets/icon_photo.svg';
 import { getRemainingTime } from '../../utils/getRemainingTime';
 import { MapRef } from 'react-map-gl';
+import OsmCopyRight from '../OsmCopyRight';
 
 type Props = {
   photoIds: string[];
@@ -84,7 +85,8 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
               className='absolute inset-0 m-auto max-h-full'
             />
           )}
-          <p className='absolute z-10 bottom-2 right-2 text-white'>{photo.address}</p>
+          <p className='absolute z-10 bottom-5 right-1 text-white'>{photo.address}</p>
+          <OsmCopyRight className='absolute z-10 bottom-1 right-1' />
         </div>
       </div>
     </Dialog>
