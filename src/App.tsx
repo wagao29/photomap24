@@ -40,6 +40,9 @@ import { UploadDialog } from './components/UploadDialog';
 import ExploreButton from './components/ExploreButton';
 import { PhotoDialog } from './components/PhotoDialog';
 import { fetchMapPhotos } from './apis/fetchMapPhotos';
+import Footer from './components/Footer';
+import { TermsDialog } from './components/TermsDialog';
+import { PrivacyDialog } from './components/PrivacyDialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -187,6 +190,18 @@ const App = () => {
     openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
   }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
+  const openHowToUseDialog = useCallback(() => {
+    openDialog(<TermsDialog onClose={closeDialog} />);
+  }, []);
+
+  const openTermsDialog = useCallback(() => {
+    openDialog(<TermsDialog onClose={closeDialog} />);
+  }, []);
+
+  const openPrivacyDialog = useCallback(() => {
+    openDialog(<PrivacyDialog onClose={closeDialog} />);
+  }, []);
+
   if (!isReadyPos) {
     return <Spinner className='absolute inset-0 flex items-center justify-center' />;
   }
@@ -239,6 +254,11 @@ const App = () => {
       </Map>
       <ExploreButton onClick={onClickExploreButton} />
       <CreatePhotoButton onClick={onClickCreate} />
+      <Footer
+        onClickHowToUse={openHowToUseDialog}
+        onClickTerms={openTermsDialog}
+        onClickPrivacy={openPrivacyDialog}
+      />
       <Toaster toastOptions={{ duration: 1500 }} />
     </div>
   );
