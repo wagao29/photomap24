@@ -12,11 +12,11 @@ const ExploreButton = ({ onClick }: Props) => {
       style={{
         position: 'absolute',
         right: '8px',
-        bottom: 'calc(105px + env(safe-area-inset-bottom, 20px))',
+        bottom: 'calc(95px + env(safe-area-inset-bottom, 20px))',
         zIndex: 10
       }}
     >
-      <img width={56} height={56} src={iconExplore} alt='' />
+      <img width={50} height={50} src={iconExplore} alt='Explore Button' />
     </button>
   );
 };

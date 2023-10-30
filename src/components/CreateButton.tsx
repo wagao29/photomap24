@@ -1,10 +1,10 @@
-import iconCreateStamp from '../assets/icon_create_stamp.svg';
+import iconCreate from '../assets/icon_create.svg';
 
 type Props = {
   onClick: () => void;
 };
 
-const CreatePhotoButton = ({ onClick }: Props) => {
+const CreateButton = ({ onClick }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -12,13 +12,13 @@ const CreatePhotoButton = ({ onClick }: Props) => {
       style={{
         position: 'absolute',
         right: '8px',
-        bottom: 'calc(40px + env(safe-area-inset-bottom, 20px))',
+        bottom: 'calc(35px + env(safe-area-inset-bottom, 20px))',
         zIndex: 10
       }}
     >
-      <img width={56} height={56} src={iconCreateStamp} alt='' />
+      <img width={50} height={50} src={iconCreate} alt='Create Button' />
     </button>
   );
 };
 
-export default CreatePhotoButton;
+export default CreateButton;
