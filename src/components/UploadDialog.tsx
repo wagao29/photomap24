@@ -14,6 +14,8 @@ import UploadButton from './UploadButton';
 import { MapRef } from 'react-map-gl';
 import { useDialogContext } from '../providers/DialogProvider';
 import { PhotoDialog } from './PhotoDialog';
+import { TermsDialog } from './TermsDialog';
+import { PrivacyDialog } from './PrivacyDialog';
 
 type Props = {
   currentPos: Coordinates;
@@ -26,7 +28,10 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [photoFile, setPhotoFile] = useState<File>();
 
-  const { openDialog } = useDialogContext();
+  const { openDialog, closeDialog } = useDialogContext();
+
+  const openTermsDialog = () => openDialog(<TermsDialog onClose={closeDialog} />);
+  const openPrivacyDialog = () => openDialog(<PrivacyDialog onClose={closeDialog} />);
 
   const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -80,12 +85,22 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
           {imgUrl ? (
             <>
               <img src={imgUrl} className='absolute inset-0 m-auto max-h-full' />
-              <UploadButton className='absolute inset-x-20 bottom-5' onClick={uploadPhoto} />
+              <p className='absolute z-10 absolute bottom-2 text-white text-xs px-2 text-center'>
+                {`By uploading a photo, you agree to PhotoMap24's `}
+                <button className='underline underline-offset-2' onClick={openTermsDialog}>
+                  Terms of Service
+                </button>
+                {` and `}
+                <button className='underline underline-offset-2' onClick={openPrivacyDialog}>
+                  Privacy Policy
+                </button>
+              </p>
+              <UploadButton className='absolute inset-x-20 bottom-12' onClick={uploadPhoto} />
             </>
           ) : (
             <>
               <img src={iconPhoto} width={150} height={150} className='absolute inset-0 m-auto' />
-              <ImageInput className='absolute inset-x-20 bottom-5' onFileChange={onFileChange} />
+              <ImageInput className='absolute inset-x-20 bottom-12' onFileChange={onFileChange} />
             </>
           )}
         </div>
