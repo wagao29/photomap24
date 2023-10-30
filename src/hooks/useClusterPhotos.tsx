@@ -66,7 +66,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     const { cluster: isCluster } = cluster.properties;
     if (isCluster) {
       const onClick = () => {
-        const photoIds = supercluster
+        const mapPhotos: MapPhoto[] = supercluster
           .getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)
           // 作成日時が新しい順に並び替える
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -75,9 +75,14 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
           })
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .map((point: any) => {
-            return point.properties.id;
+            return {
+              id: point.properties.id,
+              pos: point.properties.pos,
+              addr: point.properties.addr,
+              date: point.properties.date
+            };
           });
-        openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
+        openDialog(<PhotoDialog mapPhotos={mapPhotos} mapRef={mapRef} onClose={onCloseDialog} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -87,7 +92,18 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     } else {
       const onClick = () => {
         openDialog(
-          <PhotoDialog photoIds={[cluster.properties.id]} mapRef={mapRef} onClose={onCloseDialog} />
+          <PhotoDialog
+            mapPhotos={[
+              {
+                id: cluster.properties.id,
+                pos: cluster.properties.pos,
+                addr: cluster.properties.addr,
+                date: cluster.properties.date
+              }
+            ]}
+            mapRef={mapRef}
+            onClose={onCloseDialog}
+          />
         );
       };
       return (

@@ -18,17 +18,25 @@ export const fetchMapPhotos = async (): Promise<MapPhoto[]> => {
         .data()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .list.map((doc: any) => {
-          if (doc?.id && doc?.pos?.longitude && doc?.pos?.latitude && doc?.date?.toDate()) {
+          if (
+            doc?.id &&
+            doc?.pos?.longitude &&
+            doc?.pos?.latitude &&
+            doc?.addr &&
+            doc?.date?.toDate()
+          ) {
             return {
               id: doc.id,
               pos: {
                 longitude: doc.pos.longitude,
                 latitude: doc.pos.latitude
               },
+              addr: doc.addr,
               date: doc.date.toDate()
             } as MapPhoto;
+          } else {
+            return null;
           }
-          return null;
         })
         .filter(
           // expired の photo は表示しないようフィルタリング

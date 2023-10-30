@@ -21,6 +21,7 @@ export const onCreatePhoto = functions
       list: admin.firestore.FieldValue.arrayUnion({
         id: photoId,
         pos: photoDoc.pos,
+        addr: photoDoc.addr,
         date: photoDoc.createdAt
       })
     };

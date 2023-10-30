@@ -31,10 +31,6 @@ export const DIALOG_DELETE = 'dialog_delete';
 export const DIALOG_ERROR = 'dialog_error';
 export const DIALOG_CRITICAL = 'dialog_critical';
 
-// fetch エラー種別
-export const FETCH_ERROR_NOT_EXISTS = 'fetch_error_not_exists';
-export const FETCH_ERROR_OTHERS = 'fetch_error_others';
-
 // geolocation エラー種別
 export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
 export const GEO_ERROR_OUT_OF_BOUNDS = 'geo_error_out_of_bounds';

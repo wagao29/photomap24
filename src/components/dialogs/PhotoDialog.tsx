@@ -1,12 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { fetchPhoto } from '../../apis/fetchPhoto';
-import {
-  CLOSE_BUTTON_WHITE,
-  FETCH_ERROR_NOT_EXISTS,
-  FETCH_ERROR_OTHERS,
-  MAX_ZOOM
-} from '../../constants';
-import { Photo } from '../../types';
+import { CLOSE_BUTTON_WHITE, MAX_ZOOM } from '../../constants';
+import { MapPhoto } from '../../types';
 import { getPhotoUrl } from '../../utils/getPhotoUrl';
 import { Dialog } from '../templates/Dialog';
 import CloseButton from '../buttons/CloseButton';
@@ -19,13 +13,12 @@ import { MapRef } from 'react-map-gl';
 import OsmCopyRight from '../OsmCopyRight';
 
 type Props = {
-  photoIds: string[];
+  mapPhotos: MapPhoto[];
   mapRef: React.RefObject<MapRef>;
   onClose: () => void;
 };
 
-export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onClose }: Props) {
-  const [photo, setPhoto] = useState<Photo>();
+export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, onClose }: Props) {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [isExpired, setIsExpired] = useState<boolean>(false);
@@ -33,21 +26,13 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
   useEffect(() => {
     (async () => {
       setIsExpired(false);
-      const result = await fetchPhoto(photoIds[currentIdx]);
-      if (result === FETCH_ERROR_NOT_EXISTS) {
-        onClose();
-      } else if (result === FETCH_ERROR_OTHERS) {
-        onClose();
-      } else {
-        setPhoto(result);
-        if (mapRef.current) {
-          mapRef.current.jumpTo({
-            center: [result.pos.longitude, result.pos.latitude],
-            zoom: MAX_ZOOM
-          });
-        }
-        setRemainingTime(getRemainingTime(result.createdAt));
+      if (mapRef.current) {
+        mapRef.current.jumpTo({
+          center: [mapPhotos[currentIdx].pos.longitude, mapPhotos[currentIdx].pos.latitude],
+          zoom: MAX_ZOOM
+        });
       }
+      setRemainingTime(getRemainingTime(mapPhotos[currentIdx].date));
     })();
   }, [currentIdx, mapRef.current]);
 
@@ -63,13 +48,11 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
     setIsExpired(true);
   }, []);
 
-  if (!photo) return null;
-
   return (
     <Dialog height='80%'>
       <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
       <PrevButton onClick={onClickPrevBtn} visible={currentIdx > 0} />
-      <NextButton onClick={onClickNextBtn} visible={currentIdx < photoIds.length - 1} />
+      <NextButton onClick={onClickNextBtn} visible={currentIdx < mapPhotos.length - 1} />
       <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         <div className='relative h-full w-full'>
           <Timer
@@ -81,11 +64,11 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
             <img src={iconPhoto} className='absolute inset-0 m-auto max-h-full' />
           ) : (
             <img
-              src={getPhotoUrl(photoIds[currentIdx])}
+              src={getPhotoUrl(mapPhotos[currentIdx].id)}
               className='absolute inset-0 m-auto max-h-full'
             />
           )}
-          <p className='absolute z-10 bottom-5 right-1 text-white'>{photo.address}</p>
+          <p className='absolute z-10 bottom-5 right-1 text-white'>{mapPhotos[currentIdx].addr}</p>
           <OsmCopyRight className='absolute z-10 bottom-1 right-1' />
         </div>
       </div>

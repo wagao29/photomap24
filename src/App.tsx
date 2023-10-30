@@ -186,8 +186,9 @@ const App = () => {
 
   const onClickExploreButton = useCallback(async () => {
     const mapPhotos = await fetchMapPhotos();
-    const photoIds = mapPhotos.map((mapPhoto) => mapPhoto.id).reverse();
-    openDialog(<PhotoDialog photoIds={photoIds} mapRef={mapRef} onClose={onCloseDialog} />);
+    openDialog(
+      <PhotoDialog mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseDialog} />
+    );
   }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
   const openHowToUseDialog = useCallback(() => {

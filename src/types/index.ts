@@ -6,9 +6,7 @@ import {
   DIALOG_CONFIRM,
   DIALOG_DELETE,
   DIALOG_ERROR,
-  DIALOG_CRITICAL,
-  FETCH_ERROR_NOT_EXISTS,
-  FETCH_ERROR_OTHERS
+  DIALOG_CRITICAL
 } from '../constants';
 
 export type Coordinates = {
@@ -16,22 +14,14 @@ export type Coordinates = {
   latitude: number;
 };
 
-export type Photo = {
-  id: string;
-  pos: Coordinates;
-  address: string;
-  createdAt: Date;
-};
-
 export type MapPhoto = {
   id: string;
   pos: Coordinates;
+  addr: string;
   date: Date;
 };
 
 export type MapState = Coordinates & { zoom: number };
-
-export type FetchError = typeof FETCH_ERROR_NOT_EXISTS | typeof FETCH_ERROR_OTHERS;
 
 export type DialogType =
   | typeof DIALOG_CONFIRM
