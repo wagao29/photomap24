@@ -2,8 +2,8 @@ import { useCallback, useState } from 'react';
 import { MapRef, Marker } from 'react-map-gl';
 import useSupercluster from 'use-supercluster';
 import { fetchMapPhotos } from '../apis/fetchMapPhotos';
-import MapPhotoThumbnail from '../components/MapPhotoThumbnail';
-import { PhotoDialog } from '../components/PhotoDialog';
+import Thumbnail from '../components/templates/Thumbnail';
+import { PhotoDialog } from '../components/dialogs/PhotoDialog';
 import { CLUSTER_RADIUS, DEFAULT_ZOOM, MAX_MAP_PHOTO_COUNT, MAX_ZOOM } from '../constants';
 import { useDialogContext } from '../providers/DialogProvider';
 import { MapPhoto } from '../types';
@@ -81,7 +81,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
-          <MapPhotoThumbnail points={supercluster.getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)} />
+          <Thumbnail points={supercluster.getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)} />
         </Marker>
       );
     } else {
@@ -97,7 +97,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
           longitude={longitude}
           onClick={onClick}
         >
-          <MapPhotoThumbnail points={[cluster]} />
+          <Thumbnail points={[cluster]} />
         </Marker>
       );
     }

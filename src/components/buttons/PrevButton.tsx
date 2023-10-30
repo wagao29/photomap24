@@ -1,4 +1,4 @@
-import iconNextButton from '../assets/icon_next_button.svg';
+import iconPrevButton from '../../assets/icon_prev_button.svg';
 import toast from 'react-hot-toast';
 import { memo } from 'react';
 
@@ -7,25 +7,25 @@ type Props = {
   visible: boolean;
 };
 
-const NextButton = memo(function NextButtonBase({ onClick, visible }: Props) {
+const PrevButton = memo(function PrevButtonBase({ onClick, visible }: Props) {
   return (
     <img
       width={30}
       height={30}
-      src={iconNextButton}
+      src={iconPrevButton}
       className={`absolute z-10 inset-y-0 my-auto hover:cursor-pointer ${
         visible ? 'visible' : 'invisible'
       }`}
       style={{
-        right: -30
+        left: -30
       }}
       onClick={() => {
         onClick();
         toast.dismiss();
       }}
-      alt='NextButton'
+      alt='PrevButton'
     />
   );
 });
 
-export default NextButton;
+export default PrevButton;

@@ -1,7 +1,6 @@
-import iconStampLogo from '../assets/icon_stamp_logo.png';
-import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_SIZE } from '../constants';
-import { getThumbnailUrl } from '../utils/getThumbnailUrl';
-import ThumbnailImg from './ThumbnailImg';
+import iconStampLogo from '../../assets/icon_stamp_logo.png';
+import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_SIZE } from '../../constants';
+import { getThumbnailUrl } from '../../utils/getThumbnailUrl';
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,7 +36,7 @@ const PhotoNumber = ({ points }: Props) => {
   }
 };
 
-const MapPhotoThumbnail = ({ points }: Props) => {
+const Thumbnail = ({ points }: Props) => {
   const pointCount = points.length;
   if (pointCount < MAX_MAP_PHOTO_COUNT) {
     points.sort((pointA, pointB) => {
@@ -49,13 +48,23 @@ const MapPhotoThumbnail = ({ points }: Props) => {
   return (
     <div className='bg-white rounded-full hover:cursor-pointer hover:bg-gray-100'>
       <PhotoNumber points={points} />
-      <ThumbnailImg
+      <img
         src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconStampLogo}
-        size={THUMBNAIL_SIZE}
-        className=''
+        width={THUMBNAIL_SIZE}
+        height={THUMBNAIL_SIZE}
+        style={{
+          backgroundColor: 'black',
+          borderRadius: '0.5rem'
+        }}
+        onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+          e.currentTarget.onerror = null;
+          // TODO: iconStampLogo 差し替え
+          e.currentTarget.src = iconStampLogo;
+        }}
+        alt='thumbnail'
       />
     </div>
   );
 };
 
-export default MapPhotoThumbnail;
+export default Thumbnail;

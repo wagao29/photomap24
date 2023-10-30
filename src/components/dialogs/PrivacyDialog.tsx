@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { Dialog } from './Dialog';
-import CloseButton from './CloseButton';
-import { CLOSE_BUTTON_BLACK } from '../constants';
+import { Dialog } from '../templates/Dialog';
+import CloseButton from '../buttons/CloseButton';
+import { CLOSE_BUTTON_BLACK } from '../../constants';
 
 type Props = {
   onClose: () => void;
