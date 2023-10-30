@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Dialog } from './Dialog';
 import CloseButton from './CloseButton';
+import { CLOSE_BUTTON_BLACK } from '../constants';
 
 type Props = {
   onClose: () => void;
@@ -9,10 +10,10 @@ type Props = {
 export const TermsDialog = memo(function TermsDialogBase({ onClose }: Props) {
   return (
     <Dialog height='80%'>
-      <CloseButton onClick={onClose} />
-      <div className='flex flex-col items-center h-full font-bold pb-4'>
-        <h1 className='text-lg pt-6'>利用規約</h1>
-        <div className='overflow-scroll hidden-scrollbar p-2'>
+      <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />
+      <div className='flex flex-col items-center h-full pb-4 bg-white rounded border border-gray-300'>
+        <h1 className='text-lg pt-6 font-bold'>Terms of Service</h1>
+        <div className='overflow-scroll hidden-scrollbar p-4'>
           <ul className='space-y-4 list-inside'>
             <p className='text-xs'>
               この利用規約（以下、「本規約」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。

@@ -16,6 +16,7 @@ import { useDialogContext } from '../providers/DialogProvider';
 import { PhotoDialog } from './PhotoDialog';
 import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
+import { CLOSE_BUTTON_WHITE } from '../constants';
 
 type Props = {
   currentPos: Coordinates;
@@ -81,7 +82,7 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         <Spinner className={'absolute inset-0 flex items-center justify-center'} />
       ) : (
         <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
-          <CloseButton onClick={onClose} />
+          <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
           {imgUrl ? (
             <>
               <img src={imgUrl} className='absolute inset-0 m-auto max-h-full' />
