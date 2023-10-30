@@ -40,3 +40,7 @@ export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
 export const GEO_ERROR_OUT_OF_BOUNDS = 'geo_error_out_of_bounds';
 export const GEO_ERROR_PERMISSION = 'geo_error_permission';
 export const GEO_ERROR_OTHERS = 'geo_error_others';
+
+// Close button colors
+export const CLOSE_BUTTON_WHITE = 'close_button_white';
+export const CLOSE_BUTTON_BLACK = 'close_button_black';

@@ -1,6 +1,11 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { fetchPhoto } from '../apis/fetchPhoto';
-import { FETCH_ERROR_NOT_EXISTS, FETCH_ERROR_OTHERS, MAX_ZOOM } from '../constants';
+import {
+  CLOSE_BUTTON_WHITE,
+  FETCH_ERROR_NOT_EXISTS,
+  FETCH_ERROR_OTHERS,
+  MAX_ZOOM
+} from '../constants';
 import { Photo } from '../types';
 import { getPhotoUrl } from '../utils/getPhotoUrl';
 import { Dialog } from './Dialog';
@@ -61,7 +66,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ photoIds, mapRef, onC
 
   return (
     <Dialog height='80%'>
-      <CloseButton onClick={onClose} />
+      <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
       <PrevButton onClick={onClickPrevBtn} visible={currentIdx > 0} />
       <NextButton onClick={onClickNextBtn} visible={currentIdx < photoIds.length - 1} />
       <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
