@@ -1,10 +1,10 @@
-import iconCreate from '../assets/icon_create.svg';
+import iconExplore from '../../assets/icon_explore.svg';
 
 type Props = {
   onClick: () => void;
 };
 
-const CreateButton = ({ onClick }: Props) => {
+const ExploreButton = ({ onClick }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -12,13 +12,13 @@ const CreateButton = ({ onClick }: Props) => {
       style={{
         position: 'absolute',
         right: '8px',
-        bottom: 'calc(35px + env(safe-area-inset-bottom, 20px))',
+        bottom: 'calc(95px + env(safe-area-inset-bottom, 20px))',
         zIndex: 10
       }}
     >
-      <img width={50} height={50} src={iconCreate} alt='Create Button' />
+      <img width={50} height={50} src={iconExplore} alt='Explore Button' />
     </button>
   );
 };
 
-export default CreateButton;
+export default ExploreButton;

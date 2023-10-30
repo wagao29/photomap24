@@ -1,22 +1,22 @@
 import Compressor from 'compressorjs';
 import { memo, useCallback, useState } from 'react';
-import { Coordinates } from '../types';
-import { Dialog } from './Dialog';
-import CloseButton from './CloseButton';
-import ImageInput from './ImageInput';
-import { generateThumbnail } from '../utils/generateThumbnail';
-import { fetchAddress } from '../apis/fetchAddress';
-import { createPhoto } from '../apis/createPhoto';
-import Spinner from './Spinner';
-import { toastUploadPhotoFailed, toastUploadPhotoSuccess } from '../utils/toastMessages';
-import iconPhoto from '../assets/icon_photo.svg';
-import UploadButton from './UploadButton';
+import { Coordinates } from '../../types';
+import { Dialog } from '../templates/Dialog';
+import CloseButton from '../buttons/CloseButton';
+import ImageInput from '../templates/ImageInput';
+import { generateThumbnail } from '../../utils/generateThumbnail';
+import { fetchAddress } from '../../apis/fetchAddress';
+import { createPhoto } from '../../apis/createPhoto';
+import Spinner from '../Spinner';
+import { toastUploadPhotoFailed, toastUploadPhotoSuccess } from '../../utils/toastMessages';
+import iconPhoto from '../../assets/icon_photo.svg';
+import UploadButton from '../buttons/UploadButton';
 import { MapRef } from 'react-map-gl';
-import { useDialogContext } from '../providers/DialogProvider';
+import { useDialogContext } from '../../providers/DialogProvider';
 import { PhotoDialog } from './PhotoDialog';
 import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
-import { CLOSE_BUTTON_WHITE } from '../constants';
+import { CLOSE_BUTTON_WHITE } from '../../constants';
 
 type Props = {
   currentPos: Coordinates;

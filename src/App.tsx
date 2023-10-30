@@ -26,23 +26,23 @@ import {
   MarkerDragEvent
 } from 'react-map-gl';
 import { useDialogContext } from './providers/DialogProvider';
-import { CommonDialog } from './components/CommonDialog';
+import { CommonDialog } from './components/dialogs/CommonDialog';
 import { getCurrentPosition } from './utils/getCurrentPosition';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { sleep } from './utils/sleep';
 import Spinner from './components/Spinner';
-import CurrentPosMarker from './components/CurrentPosMarker';
+import CurrentPosMarker from './components/templates/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
-import CreateButton from './components/CreateButton';
+import CreateButton from './components/buttons/CreateButton';
 import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
-import { UploadDialog } from './components/UploadDialog';
-import ExploreButton from './components/ExploreButton';
-import { PhotoDialog } from './components/PhotoDialog';
+import { UploadDialog } from './components/dialogs/UploadDialog';
+import ExploreButton from './components/buttons/ExploreButton';
+import { PhotoDialog } from './components/dialogs/PhotoDialog';
 import { fetchMapPhotos } from './apis/fetchMapPhotos';
-import Footer from './components/Footer';
-import { TermsDialog } from './components/TermsDialog';
-import { PrivacyDialog } from './components/PrivacyDialog';
+import Footer from './components/templates/Footer';
+import { TermsDialog } from './components/dialogs/TermsDialog';
+import { PrivacyDialog } from './components/dialogs/PrivacyDialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();

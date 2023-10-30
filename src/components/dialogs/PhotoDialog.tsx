@@ -1,20 +1,20 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { fetchPhoto } from '../apis/fetchPhoto';
+import { fetchPhoto } from '../../apis/fetchPhoto';
 import {
   CLOSE_BUTTON_WHITE,
   FETCH_ERROR_NOT_EXISTS,
   FETCH_ERROR_OTHERS,
   MAX_ZOOM
-} from '../constants';
-import { Photo } from '../types';
-import { getPhotoUrl } from '../utils/getPhotoUrl';
-import { Dialog } from './Dialog';
-import CloseButton from './CloseButton';
-import NextButton from './NextButton';
-import PrevButton from './PrevButton';
-import Timer from './Timer';
-import iconPhoto from '../assets/icon_photo.svg';
-import { getRemainingTime } from '../utils/getRemainingTime';
+} from '../../constants';
+import { Photo } from '../../types';
+import { getPhotoUrl } from '../../utils/getPhotoUrl';
+import { Dialog } from '../templates/Dialog';
+import CloseButton from '../buttons/CloseButton';
+import NextButton from '../buttons/NextButton';
+import PrevButton from '../buttons/PrevButton';
+import Timer from '../templates/Timer';
+import iconPhoto from '../../assets/icon_photo.svg';
+import { getRemainingTime } from '../../utils/getRemainingTime';
 import { MapRef } from 'react-map-gl';
 
 type Props = {

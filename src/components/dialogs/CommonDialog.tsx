@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { DIALOG_CONFIRM, DIALOG_CRITICAL, DIALOG_DELETE, DIALOG_ERROR } from '../constants';
-import { DialogType } from '../types';
-import { Dialog } from './Dialog';
+import { DIALOG_CONFIRM, DIALOG_CRITICAL, DIALOG_DELETE, DIALOG_ERROR } from '../../constants';
+import { DialogType } from '../../types';
+import { Dialog } from '../templates/Dialog';
 
 type Props = {
   dialogType: DialogType;
