@@ -4,18 +4,13 @@ import {
   DEFAULT_POS,
   DEFAULT_ZOOM,
   DIALOG_ERROR,
-  EAST_POINT,
   GEO_ERROR_OTHERS,
-  GEO_ERROR_OUT_OF_BOUNDS,
   GEO_ERROR_PERMISSION,
   GEO_ERROR_UNSUPPORTED,
   GET_CURRENT_POSITION_TIME_OUT,
   MAP_STYLE_URL,
   MAX_ZOOM,
-  MIN_ZOOM,
-  NORTH_POINT,
-  SOUTH_POINT,
-  WEST_POINT
+  MIN_ZOOM
 } from './constants';
 import {
   GeolocateControl,
@@ -70,17 +65,6 @@ const App = () => {
     );
   }, []);
 
-  const openOutOfBoundsErrorDialog = useCallback(() => {
-    openDialog(
-      <CommonDialog
-        dialogType={DIALOG_ERROR}
-        title='位置情報エラー'
-        content='現在地はサービス提供エリア外です。本サービスは日本国内のみ対応しています。'
-        onCancel={closeDialog}
-      />
-    );
-  }, []);
-
   const openPermissionErrorDialog = useCallback(() => {
     openDialog(
       <CommonDialog
@@ -109,10 +93,6 @@ const App = () => {
       switch (result) {
         case GEO_ERROR_UNSUPPORTED: {
           openUnsupportedErrorDialog();
-          break;
-        }
-        case GEO_ERROR_OUT_OF_BOUNDS: {
-          openOutOfBoundsErrorDialog();
           break;
         }
         case GEO_ERROR_PERMISSION: {
@@ -180,10 +160,6 @@ const App = () => {
     [openPermissionErrorDialog, openOtherErrorDialog]
   );
 
-  const onOutOfMaxBounds = useCallback(() => {
-    openOutOfBoundsErrorDialog();
-  }, [openOutOfBoundsErrorDialog]);
-
   const onClickExploreButton = useCallback(async () => {
     const mapPhotos = await fetchMapPhotos();
     openDialog(
@@ -228,10 +204,6 @@ const App = () => {
         onLoad={onMapLoad}
         maxZoom={MAX_ZOOM}
         minZoom={MIN_ZOOM}
-        maxBounds={[
-          [WEST_POINT, SOUTH_POINT],
-          [EAST_POINT, NORTH_POINT]
-        ]}
         pitchWithRotate={false}
         touchPitch={false}
       >
@@ -249,7 +221,6 @@ const App = () => {
           position='bottom-left'
           fitBoundsOptions={{ maxZoom: DEFAULT_ZOOM }}
           onGeolocate={onGeolocate}
-          onOutOfMaxBounds={onOutOfMaxBounds}
           onError={onError}
         />
       </Map>

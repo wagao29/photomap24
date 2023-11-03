@@ -1,6 +1,5 @@
 import {
   GEO_ERROR_UNSUPPORTED,
-  GEO_ERROR_OUT_OF_BOUNDS,
   GEO_ERROR_PERMISSION,
   GEO_ERROR_OTHERS,
   DIALOG_CONFIRM,
@@ -31,6 +30,5 @@ export type DialogType =
 
 export type GeoError =
   | typeof GEO_ERROR_UNSUPPORTED
-  | typeof GEO_ERROR_OUT_OF_BOUNDS
   | typeof GEO_ERROR_PERMISSION
   | typeof GEO_ERROR_OTHERS;
