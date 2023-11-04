@@ -23,6 +23,12 @@ export const toastUploadPhotoFailed = () => {
     id: 'UploadPhotoFailed'
   });
 };
+export const toastLoadingPhotoFailed = () => {
+  toast.error('Loading Photo Failed', {
+    className,
+    id: 'LoadingPhotoFailed'
+  });
+};
 export const toastNoPhotosError = () => {
   toast.error('There are no photos', {
     className,
