@@ -26,15 +26,9 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
   useEffect(() => {
     (async () => {
       setIsExpired(false);
-      if (mapRef.current) {
-        mapRef.current.jumpTo({
-          center: [mapPhotos[currentIdx].pos.longitude, mapPhotos[currentIdx].pos.latitude],
-          zoom: MAX_ZOOM
-        });
-      }
       setRemainingTime(getRemainingTime(mapPhotos[currentIdx].date));
     })();
-  }, [currentIdx, mapRef.current]);
+  }, [currentIdx]);
 
   const onClickPrevBtn = useCallback(() => {
     setCurrentIdx((idx) => idx - 1);
@@ -47,6 +41,16 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
   const onExpire = useCallback(() => {
     setIsExpired(true);
   }, []);
+
+  const onClickAddress = () => {
+    if (mapRef.current) {
+      mapRef.current.jumpTo({
+        center: [mapPhotos[currentIdx].pos.longitude, mapPhotos[currentIdx].pos.latitude],
+        zoom: MAX_ZOOM
+      });
+      onClose();
+    }
+  };
 
   return (
     <Dialog height='80%'>
@@ -68,7 +72,12 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
               className='absolute inset-0 m-auto max-h-full'
             />
           )}
-          <p className='absolute z-10 bottom-5 right-1 text-white'>{mapPhotos[currentIdx].addr}</p>
+          <p
+            className='absolute z-10 bottom-5 right-1 text-white underline'
+            onClick={onClickAddress}
+          >
+            {mapPhotos[currentIdx].addr}
+          </p>
           <OsmCopyRight className='absolute z-10 bottom-1 right-1' />
         </div>
       </div>
