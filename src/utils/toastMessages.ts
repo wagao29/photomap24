@@ -2,13 +2,7 @@ import { toast } from 'react-hot-toast';
 
 const className = 'border-2 border-gray-600 text-gray-600 font-bold text-sm';
 
-export const toastCurrentPosError = () => {
-  toast.error('Unable to obtain current location', {
-    className,
-    id: 'CurrentPosError'
-  });
-};
-
+// Message
 export const toastUploadPhotoMessage = () => {
   toast('Upload a photo to your current location', {
     className,
@@ -16,16 +10,30 @@ export const toastUploadPhotoMessage = () => {
   });
 };
 
-export const toastUploadPhotoSuccess = () => {
-  toast.success('Upload Success', {
+// Error
+export const toastCurrentPosError = () => {
+  toast.error('Unable to obtain current location', {
     className,
-    id: 'UploadPhotoSuccess'
+    id: 'CurrentPosError'
   });
 };
-
 export const toastUploadPhotoFailed = () => {
   toast.error('Upload Failed', {
     className,
     id: 'UploadPhotoFailed'
+  });
+};
+export const toastNoPhotosError = () => {
+  toast.error('There are no photos', {
+    className,
+    id: 'NoPhotosError'
+  });
+};
+
+// Success
+export const toastUploadPhotoSuccess = () => {
+  toast.success('Upload Success', {
+    className,
+    id: 'UploadPhotoSuccess'
   });
 };

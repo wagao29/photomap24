@@ -30,7 +30,11 @@ import CurrentPosMarker from './components/templates/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreateButton from './components/buttons/CreateButton';
-import { toastCurrentPosError, toastUploadPhotoMessage } from './utils/toastMessages';
+import {
+  toastCurrentPosError,
+  toastNoPhotosError,
+  toastUploadPhotoMessage
+} from './utils/toastMessages';
 import { UploadDialog } from './components/dialogs/UploadDialog';
 import ExploreButton from './components/buttons/ExploreButton';
 import { PhotoDialog } from './components/dialogs/PhotoDialog';
@@ -162,9 +166,13 @@ const App = () => {
 
   const onClickExploreButton = useCallback(async () => {
     const mapPhotos = await fetchMapPhotos();
-    openDialog(
-      <PhotoDialog mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseDialog} />
-    );
+    if (mapPhotos.length === 0) {
+      toastNoPhotosError();
+    } else {
+      openDialog(
+        <PhotoDialog mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseDialog} />
+      );
+    }
   }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
   const openHowToUseDialog = useCallback(() => {
