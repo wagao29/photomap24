@@ -11,6 +11,7 @@ import iconPhoto from '../../assets/icon_photo.svg';
 import { getRemainingTime } from '../../utils/getRemainingTime';
 import { MapRef } from 'react-map-gl';
 import OsmCopyRight from '../OsmCopyRight';
+import Spinner from '../Spinner';
 
 type Props = {
   mapPhotos: MapPhoto[];
@@ -22,10 +23,12 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(0);
   const [isExpired, setIsExpired] = useState<boolean>(false);
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
 
   useEffect(() => {
     (async () => {
       setIsExpired(false);
+      setIsImgLoading(true);
       setRemainingTime(getRemainingTime(mapPhotos[currentIdx].date));
     })();
   }, [currentIdx]);
@@ -55,30 +58,50 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
   return (
     <Dialog height='80%'>
       <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
-      <PrevButton onClick={onClickPrevBtn} visible={currentIdx > 0} />
-      <NextButton onClick={onClickNextBtn} visible={currentIdx < mapPhotos.length - 1} />
+      <PrevButton onClick={onClickPrevBtn} visible={!isImgLoading && currentIdx > 0} />
+      <NextButton
+        onClick={onClickNextBtn}
+        visible={!isImgLoading && currentIdx < mapPhotos.length - 1}
+      />
       <div className='h-full overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         <div className='relative h-full w-full'>
           <Timer
-            className='absolute z-10 top-2 left-2 text-white'
+            className='absolute z-20 top-2 left-2 text-white'
             initTime={remainingTime}
             onExpire={onExpire}
           />
+          {isImgLoading && (
+            <Spinner className='absolute z-10 inset-0 flex items-center justify-center bg-black' />
+          )}
           {isExpired ? (
-            <img src={iconPhoto} className='absolute inset-0 m-auto max-h-full' />
+            <img
+              src={iconPhoto}
+              className='absolute inset-0 m-auto max-h-full my-10'
+              onLoad={() => {
+                setIsImgLoading(false);
+              }}
+            />
           ) : (
             <img
               src={getPhotoUrl(mapPhotos[currentIdx].id)}
-              className='absolute inset-0 m-auto max-h-full'
+              onLoad={() => {
+                setIsImgLoading(false);
+              }}
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                setIsImgLoading(false);
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = iconPhoto;
+              }}
+              className='absolute inset-0 m-auto max-h-full py-10'
             />
           )}
           <p
-            className='absolute z-10 bottom-5 right-1 text-white underline'
+            className='absolute z-20 bottom-5 right-1 text-white underline'
             onClick={onClickAddress}
           >
             {mapPhotos[currentIdx].addr}
           </p>
-          <OsmCopyRight className='absolute z-10 bottom-1 right-1' />
+          <OsmCopyRight className='absolute z-20 bottom-1 right-1' />
         </div>
       </div>
     </Dialog>

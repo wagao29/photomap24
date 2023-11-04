@@ -11,7 +11,7 @@ type Props = {
 const CloseButton = memo(function CloseButtonBase({ color, onClick }: Props) {
   return (
     <img
-      className='absolute z-10 top-3 right-3 hover:cursor-pointer'
+      className='absolute z-20 top-3 right-3 hover:cursor-pointer'
       src={color === CLOSE_BUTTON_WHITE ? iconCloseWhite : iconCloseBlack}
       width={20}
       height={20}
