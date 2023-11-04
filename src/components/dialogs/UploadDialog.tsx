@@ -43,9 +43,8 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         }
       });
       new Compressor(e.target.files[0], {
-        quality: 0.6,
+        quality: 0.2,
         convertTypes: 'image/jpeg',
-        maxWidth: 480,
         success(result) {
           reader.readAsDataURL(result);
           setPhotoFile(result as File);
