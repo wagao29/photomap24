@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { CLOSE_BUTTON_WHITE, MAX_ZOOM } from '../../constants';
 import { MapPhoto } from '../../types';
 import { getPhotoUrl } from '../../utils/getPhotoUrl';
@@ -21,25 +21,27 @@ type Props = {
 
 export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, onClose }: Props) {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
-  const [remainingTime, setRemainingTime] = useState<number>(0);
+  const [remainingTime, setRemainingTime] = useState<number>(getRemainingTime(mapPhotos[0].date));
   const [isExpired, setIsExpired] = useState<boolean>(false);
-  const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    (async () => {
-      setIsExpired(false);
-      setIsImgLoading(true);
-      setRemainingTime(getRemainingTime(mapPhotos[currentIdx].date));
-    })();
-  }, [currentIdx]);
+  const [isImgLoading, setIsImgLoading] = useState<boolean>(true);
 
   const onClickPrevBtn = useCallback(() => {
-    setCurrentIdx((idx) => idx - 1);
-  }, []);
+    if (currentIdx > 0) {
+      setIsImgLoading(true);
+      setIsExpired(false);
+      setRemainingTime(getRemainingTime(mapPhotos[currentIdx - 1].date));
+      setCurrentIdx(currentIdx - 1);
+    }
+  }, [currentIdx]);
 
   const onClickNextBtn = useCallback(() => {
-    setCurrentIdx((idx) => idx + 1);
-  }, []);
+    if (currentIdx < mapPhotos.length - 1) {
+      setIsImgLoading(true);
+      setIsExpired(false);
+      setRemainingTime(getRemainingTime(mapPhotos[currentIdx + 1].date));
+      setCurrentIdx(currentIdx + 1);
+    }
+  }, [currentIdx]);
 
   const onExpire = useCallback(() => {
     setIsExpired(true);
