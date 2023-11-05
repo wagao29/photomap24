@@ -35,6 +35,12 @@ export const toastNoPhotosError = () => {
     id: 'NoPhotosError'
   });
 };
+export const toastPhotoFileSizeError = () => {
+  toast.error('File size is too large', {
+    className,
+    id: 'PhotoFileSizeError'
+  });
+};
 
 // Success
 export const toastUploadPhotoSuccess = () => {

@@ -18,6 +18,7 @@ export const MAP_STYLE_URL = 'mapbox://styles/wagao/cloict5xt000y01r62pusgbhs';
 export const CLUSTER_RADIUS = 100;
 
 export const THUMBNAIL_SIZE = 100;
+export const MAX_PHOTO_FILE_SIZE = 500000;
 
 export const FETCH_NEW_PHOTOS_SIZE = 10;
 

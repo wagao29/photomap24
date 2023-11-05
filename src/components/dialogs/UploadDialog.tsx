@@ -10,6 +10,7 @@ import { createPhoto } from '../../apis/createPhoto';
 import Spinner from '../Spinner';
 import {
   toastLoadingPhotoFailed,
+  toastPhotoFileSizeError,
   toastUploadPhotoFailed,
   toastUploadPhotoSuccess
 } from '../../utils/toastMessages';
@@ -20,7 +21,7 @@ import { useDialogContext } from '../../providers/DialogProvider';
 import { PhotoDialog } from './PhotoDialog';
 import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
-import { CLOSE_BUTTON_WHITE } from '../../constants';
+import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE } from '../../constants';
 
 type Props = {
   currentPos: Coordinates;
@@ -45,8 +46,12 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         quality: 0.2,
         convertTypes: 'image/jpeg',
         success(result) {
-          setImgUrl(window.URL.createObjectURL(result));
-          setPhotoFile(result as File);
+          if (result.size > MAX_PHOTO_FILE_SIZE) {
+            toastPhotoFileSizeError();
+          } else {
+            setImgUrl(window.URL.createObjectURL(result));
+            setPhotoFile(result as File);
+          }
           setIsLoading(false);
         },
         error(err) {
