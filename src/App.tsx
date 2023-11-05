@@ -29,11 +29,7 @@ import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreateButton from './components/buttons/CreateButton';
-import {
-  toastCurrentPosError,
-  toastNoPhotosError,
-  toastUploadPhotoMessage
-} from './utils/toastMessages';
+import { toastNoPhotosError, toastUploadPhotoMessage } from './utils/toastMessages';
 import { UploadDialog } from './components/dialogs/UploadDialog';
 import ExploreButton from './components/buttons/ExploreButton';
 import { PhotoDialog } from './components/dialogs/PhotoDialog';
@@ -131,7 +127,7 @@ const App = () => {
       await sleep(1.5);
       openDialog(<UploadDialog currentPos={currentPos} mapRef={mapRef} onClose={onCloseDialog} />);
     } else {
-      toastCurrentPosError();
+      openOtherErrorDialog();
     }
   };
 
