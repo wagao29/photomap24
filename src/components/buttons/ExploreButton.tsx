@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import iconExplore from '../../assets/icon_explore.svg';
 
 type Props = {
   onClick: () => void;
 };
 
-const ExploreButton = ({ onClick }: Props) => {
+const ExploreButton = memo(function ExploreButtonBase({ onClick }: Props) {
   return (
     <button
       onClick={onClick}
@@ -19,6 +20,6 @@ const ExploreButton = ({ onClick }: Props) => {
       <img width={50} height={50} src={iconExplore} alt='Explore Button' />
     </button>
   );
-};
+});
 
 export default ExploreButton;

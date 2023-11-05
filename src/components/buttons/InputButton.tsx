@@ -9,7 +9,7 @@ type Props = {
 const baseStyle = `p-2 border-2 border-white rounded-lg font-bold text-center text-white 
 active:bg-white active:text-black hover:bg-white hover:text-black hover:cursor-pointer`;
 
-const ImageInput = memo(function ImageInputBase({ onFileChange, className }: Props) {
+const InputButton = memo(function ImageInputBase({ onFileChange, className }: Props) {
   return (
     <label className={twMerge(baseStyle, className)}>
       Select Photo
@@ -18,4 +18,4 @@ const ImageInput = memo(function ImageInputBase({ onFileChange, className }: Pro
   );
 });
 
-export default ImageInput;
+export default InputButton;

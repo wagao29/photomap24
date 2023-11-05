@@ -25,7 +25,7 @@ import { getCurrentPosition } from './utils/getCurrentPosition';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { sleep } from './utils/sleep';
 import Spinner from './components/Spinner';
-import CurrentPosMarker from './components/templates/CurrentPosMarker';
+import CurrentPosMarker from './components/CurrentPosMarker';
 import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreateButton from './components/buttons/CreateButton';

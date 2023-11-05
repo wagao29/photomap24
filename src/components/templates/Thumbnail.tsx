@@ -1,4 +1,4 @@
-import iconStampLogo from '../../assets/icon_stamp_logo.png';
+import iconPhoto from '../../assets/icon_photo.svg';
 import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_SIZE } from '../../constants';
 import { getThumbnailUrl } from '../../utils/getThumbnailUrl';
 
@@ -49,7 +49,7 @@ const Thumbnail = ({ points }: Props) => {
     <div className='bg-white rounded-full hover:cursor-pointer hover:bg-gray-100'>
       <PhotoNumber points={points} />
       <img
-        src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconStampLogo}
+        src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconPhoto}
         width={THUMBNAIL_SIZE}
         height={THUMBNAIL_SIZE}
         style={{
@@ -58,8 +58,7 @@ const Thumbnail = ({ points }: Props) => {
         }}
         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
           e.currentTarget.onerror = null;
-          // TODO: iconStampLogo 差し替え
-          e.currentTarget.src = iconStampLogo;
+          e.currentTarget.src = iconPhoto;
         }}
         alt='thumbnail'
       />

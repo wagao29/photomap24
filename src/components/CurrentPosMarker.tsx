@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Marker, MarkerDragEvent } from 'react-map-gl';
-import { Coordinates } from '../../types';
-import iconCurrentPosition from '../../assets/icon_current_position.svg';
+import { Coordinates } from '../types';
+import iconCurrentPosition from '../assets/icon_current_position.svg';
 
 type Props = {
   currentPos: Coordinates;
