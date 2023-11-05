@@ -3,7 +3,6 @@ import { memo, useCallback, useState } from 'react';
 import { Coordinates } from '../../types';
 import { Dialog } from '../templates/Dialog';
 import CloseButton from '../buttons/CloseButton';
-import ImageInput from '../templates/ImageInput';
 import { generateThumbnail } from '../../utils/generateThumbnail';
 import { fetchAddress } from '../../apis/fetchAddress';
 import { createPhoto } from '../../apis/createPhoto';
@@ -22,6 +21,7 @@ import { PhotoDialog } from './PhotoDialog';
 import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
 import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE } from '../../constants';
+import InputButton from '../buttons/InputButton';
 
 type Props = {
   currentPos: Coordinates;
@@ -113,7 +113,7 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         ) : (
           <>
             <img src={iconPhoto} width={150} height={150} className='absolute inset-0 m-auto' />
-            <ImageInput className='absolute inset-x-20 bottom-12' onFileChange={onFileChange} />
+            <InputButton className='absolute inset-x-20 bottom-12' onFileChange={onFileChange} />
           </>
         )}
       </div>

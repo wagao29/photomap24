@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import iconCreate from '../../assets/icon_create.svg';
 
 type Props = {
   onClick: () => void;
 };
 
-const CreateButton = ({ onClick }: Props) => {
+const CreateButton = memo(function CreateButtonBase({ onClick }: Props) {
   return (
     <button
       onClick={onClick}
@@ -19,6 +20,6 @@ const CreateButton = ({ onClick }: Props) => {
       <img width={50} height={50} src={iconCreate} alt='Create Button' />
     </button>
   );
-};
+});
 
 export default CreateButton;
