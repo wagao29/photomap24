@@ -11,12 +11,6 @@ export const toastUploadPhotoMessage = () => {
 };
 
 // Error
-export const toastCurrentPosError = () => {
-  toast.error('Unable to obtain current location', {
-    className,
-    id: 'CurrentPosError'
-  });
-};
 export const toastUploadPhotoFailed = () => {
   toast.error('Upload Failed', {
     className,
