@@ -22,6 +22,7 @@ import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
 import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE } from '../../constants';
 import InputButton from '../buttons/InputButton';
+import Note from '../templates/Note';
 
 type Props = {
   currentPos: Coordinates;
@@ -36,8 +37,8 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
 
   const { openDialog, closeDialog } = useDialogContext();
 
-  const openTermsDialog = () => openDialog(<TermsDialog onClose={closeDialog} />);
-  const openPrivacyDialog = () => openDialog(<PrivacyDialog onClose={closeDialog} />);
+  const onClickTerms = useCallback(() => openDialog(<TermsDialog onClose={closeDialog} />), []);
+  const onClickPrivacy = useCallback(() => openDialog(<PrivacyDialog onClose={closeDialog} />), []);
 
   const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -98,16 +99,11 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         {imgUrl ? (
           <>
             <img src={imgUrl} className='absolute inset-0 m-auto max-h-full' />
-            <p className='absolute absolute bottom-2 text-white text-xs px-2 text-center'>
-              {`By uploading a photo, you agree to PhotoMap24's `}
-              <button className='underline underline-offset-2' onClick={openTermsDialog}>
-                Terms of Service
-              </button>
-              {` and `}
-              <button className='underline underline-offset-2' onClick={openPrivacyDialog}>
-                Privacy Policy
-              </button>
-            </p>
+            <Note
+              onClickTerms={onClickTerms}
+              onClickPrivacy={onClickPrivacy}
+              className='absolute bottom-2 px-2'
+            />
             <UploadButton className='absolute inset-x-20 bottom-12' onClick={uploadPhoto} />
           </>
         ) : (
