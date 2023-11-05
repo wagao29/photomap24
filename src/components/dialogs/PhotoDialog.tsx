@@ -12,6 +12,7 @@ import { getRemainingTime } from '../../utils/getRemainingTime';
 import { MapRef } from 'react-map-gl';
 import OsmCopyRight from '../OsmCopyRight';
 import Spinner from '../Spinner';
+import Address from '../Address';
 
 type Props = {
   mapPhotos: MapPhoto[];
@@ -47,7 +48,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
     setIsExpired(true);
   }, []);
 
-  const onClickAddress = () => {
+  const onClickAddress = useCallback(() => {
     if (mapRef.current) {
       mapRef.current.jumpTo({
         center: [mapPhotos[currentIdx].pos.longitude, mapPhotos[currentIdx].pos.latitude],
@@ -55,7 +56,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
       });
       onClose();
     }
-  };
+  }, [mapRef.current, currentIdx]);
 
   return (
     <Dialog height='80%'>
@@ -96,9 +97,9 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
             className='absolute inset-0 m-auto max-h-full py-10'
           />
         )}
-        <p className='absolute z-20 bottom-5 right-1 text-white underline' onClick={onClickAddress}>
+        <Address className='absolute z-20 bottom-5 right-1' onClick={onClickAddress}>
           {mapPhotos[currentIdx].addr}
-        </p>
+        </Address>
         <OsmCopyRight className='absolute z-20 bottom-1 right-1' />
       </div>
     </Dialog>
