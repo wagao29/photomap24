@@ -3,7 +3,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   DEFAULT_POS,
   DEFAULT_ZOOM,
-  DIALOG_ERROR,
   GEO_ERROR_OTHERS,
   GEO_ERROR_PERMISSION,
   GEO_ERROR_UNSUPPORTED,
@@ -21,7 +20,7 @@ import {
   MarkerDragEvent
 } from 'react-map-gl';
 import { useDialogContext } from './providers/DialogProvider';
-import { CommonDialog } from './components/dialogs/CommonDialog';
+import { ErrorDialog } from './components/dialogs/ErrorDialog';
 import { getCurrentPosition } from './utils/getCurrentPosition';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { sleep } from './utils/sleep';
@@ -60,33 +59,30 @@ const App = () => {
 
   const openUnsupportedErrorDialog = useCallback(() => {
     openDialog(
-      <CommonDialog
-        dialogType={DIALOG_ERROR}
-        title='位置情報エラー'
-        content='お使いのブラウザは位置情報の取得に対応していません。別のブラウザや端末からお試しください。'
-        onCancel={closeDialog}
+      <ErrorDialog
+        title='Geolocation error'
+        content='Geolocation is not supported. Please try from another device.'
+        onClose={closeDialog}
       />
     );
   }, []);
 
   const openPermissionErrorDialog = useCallback(() => {
     openDialog(
-      <CommonDialog
-        dialogType={DIALOG_ERROR}
-        title='位置情報エラー'
-        content='位置情報の使用が許可されていません。ブラウザの位置情報の使用を許可してください。'
-        onCancel={closeDialog}
+      <ErrorDialog
+        title='Geolocation Error'
+        content='User denied geolocation. Please allow use of geolocation.'
+        onClose={closeDialog}
       />
     );
   }, []);
 
   const openOtherErrorDialog = useCallback(() => {
     openDialog(
-      <CommonDialog
-        dialogType={DIALOG_ERROR}
-        title='位置情報エラー'
-        content='位置情報の取得に失敗しました。繰り返し失敗する場合、別のブラウザや端末からお試しください。'
-        onCancel={closeDialog}
+      <ErrorDialog
+        title='Geolocation Error'
+        content='Failed to obtain geolocation. Please reload the page.'
+        onClose={closeDialog}
       />
     );
   }, []);

@@ -21,12 +21,6 @@ export const THUMBNAIL_SIZE = 100;
 
 export const FETCH_NEW_PHOTOS_SIZE = 10;
 
-// ダイアログ種別
-export const DIALOG_CONFIRM = 'dialog_confirm';
-export const DIALOG_DELETE = 'dialog_delete';
-export const DIALOG_ERROR = 'dialog_error';
-export const DIALOG_CRITICAL = 'dialog_critical';
-
 // geolocation エラー種別
 export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
 export const GEO_ERROR_PERMISSION = 'geo_error_permission';
