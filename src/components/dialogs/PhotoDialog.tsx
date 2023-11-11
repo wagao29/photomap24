@@ -1,5 +1,5 @@
 import { memo, useCallback, useState } from 'react';
-import { CLOSE_BUTTON_WHITE, MAX_ZOOM } from '../../constants';
+import { CLOSE_BUTTON_WHITE, MAX_ZOOM, PLACEHOLDER_SIZE } from '../../constants';
 import { MapPhoto } from '../../types';
 import { getPhotoUrl } from '../../utils/getPhotoUrl';
 import { Dialog } from '../templates/Dialog';
@@ -78,7 +78,9 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
         {isExpired ? (
           <img
             src={iconPhoto}
-            className='absolute inset-0 m-auto max-h-full my-10'
+            width={PLACEHOLDER_SIZE}
+            height={PLACEHOLDER_SIZE}
+            className='absolute inset-0 m-auto'
             onLoad={() => {
               setIsLoading(false);
             }}

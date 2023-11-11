@@ -20,7 +20,7 @@ import { useDialogContext } from '../../providers/DialogProvider';
 import { PhotoDialog } from './PhotoDialog';
 import { TermsDialog } from './TermsDialog';
 import { PrivacyDialog } from './PrivacyDialog';
-import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE } from '../../constants';
+import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE, PLACEHOLDER_SIZE } from '../../constants';
 import InputButton from '../buttons/InputButton';
 import Note from '../templates/Note';
 
@@ -108,7 +108,12 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
           </>
         ) : (
           <>
-            <img src={iconPhoto} width={150} height={150} className='absolute inset-0 m-auto' />
+            <img
+              src={iconPhoto}
+              width={PLACEHOLDER_SIZE}
+              height={PLACEHOLDER_SIZE}
+              className='absolute inset-0 m-auto'
+            />
             <InputButton className='absolute inset-x-20 bottom-12' onFileChange={onFileChange} />
           </>
         )}
