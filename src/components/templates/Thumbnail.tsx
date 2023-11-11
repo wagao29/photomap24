@@ -8,7 +8,7 @@ type Props = {
 };
 
 const photoNumberClassName =
-  'font-bold text-lg absolute flex items-center justify-center rounded-full border-2 bg-white border-gray-600 text-gray-600';
+  'font-bold text-base absolute flex items-center justify-center rounded-full border bg-white border-gray-300';
 
 const baseStyle = {
   width: 30,
