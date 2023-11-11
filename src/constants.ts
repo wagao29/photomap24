@@ -2,7 +2,7 @@
 export const FIRESTORE_VERSION = 1;
 export const MAP_PHOTOS_DOCUMENT_ID = '1';
 
-// 地図表示の設定値
+// Map settings
 export const DEFAULT_POS = {
   // 東京駅
   lat: 35.6815947,
@@ -17,12 +17,12 @@ export const MAX_MAP_PHOTO_COUNT = 100;
 export const MAP_STYLE_URL = 'mapbox://styles/wagao/cloict5xt000y01r62pusgbhs';
 export const CLUSTER_RADIUS = 100;
 
-export const THUMBNAIL_SIZE = 100;
+// Image sizes
+export const THUMBNAIL_SIZE = 200;
+export const THUMBNAIL_DISPLAY_SIZE = 100;
 export const MAX_PHOTO_FILE_SIZE = 500000;
 
-export const FETCH_NEW_PHOTOS_SIZE = 10;
-
-// geolocation エラー種別
+// Geolocation errors
 export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
 export const GEO_ERROR_PERMISSION = 'geo_error_permission';
 export const GEO_ERROR_OTHERS = 'geo_error_others';

@@ -94,7 +94,7 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
       <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
       <div className='h-full relative overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         {isLoading && (
-          <Spinner className='absolute z-10 inset-0 flex items-center justify-center bg-black' />
+          <Spinner className='absolute z-20 inset-0 flex items-center justify-center bg-black' />
         )}
         {imgUrl ? (
           <>
