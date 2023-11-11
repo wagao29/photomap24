@@ -1,5 +1,5 @@
 import iconPhoto from '../../assets/icon_photo.svg';
-import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_SIZE } from '../../constants';
+import { MAX_MAP_PHOTO_COUNT, THUMBNAIL_DISPLAY_SIZE } from '../../constants';
 import { getThumbnailUrl } from '../../utils/getThumbnailUrl';
 
 type Props = {
@@ -50,8 +50,8 @@ const Thumbnail = ({ points }: Props) => {
       <PhotoNumber points={points} />
       <img
         src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconPhoto}
-        width={THUMBNAIL_SIZE}
-        height={THUMBNAIL_SIZE}
+        width={THUMBNAIL_DISPLAY_SIZE}
+        height={THUMBNAIL_DISPLAY_SIZE}
         style={{
           backgroundColor: 'black',
           borderRadius: '0.5rem'

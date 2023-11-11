@@ -22,11 +22,9 @@ export const generateThumbnail = (file: File): Promise<Blob> => {
             if (ctx) {
               if (imgWidth > THUMBNAIL_SIZE || imgHeight > THUMBNAIL_SIZE) {
                 if (imgRate >= 1) {
-                  // 画像が横長のとき
                   const imgPos = (THUMBNAIL_SIZE - THUMBNAIL_SIZE * imgRate) / 2;
                   ctx.drawImage(img, imgPos, 0, THUMBNAIL_SIZE * imgRate, THUMBNAIL_SIZE);
                 } else {
-                  // 画像が縦長のとき
                   const imgPos = (THUMBNAIL_SIZE - THUMBNAIL_SIZE / imgRate) / 2;
                   ctx.drawImage(img, 0, imgPos, THUMBNAIL_SIZE, THUMBNAIL_SIZE / imgRate);
                 }
