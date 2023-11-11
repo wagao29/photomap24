@@ -36,11 +36,11 @@ const Timer = ({ initTime, onExpire, className }: Props) => {
   const sec = (countTime % 60).toString().padStart(2, '0');
 
   if (countTime <= 0) {
-    return <p className={className}>expired</p>;
+    return <p className={className}>Expired</p>;
   } else {
     return (
       <p className={className}>
-        expires: {hr}:{min}:{sec}
+        Expires: {hr}:{min}:{sec}
       </p>
     );
   }

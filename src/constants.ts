@@ -21,6 +21,7 @@ export const CLUSTER_RADIUS = 100;
 export const THUMBNAIL_SIZE = 200;
 export const THUMBNAIL_DISPLAY_SIZE = 100;
 export const MAX_PHOTO_FILE_SIZE = 500000;
+export const PLACEHOLDER_SIZE = 200;
 
 // Geolocation errors
 export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
