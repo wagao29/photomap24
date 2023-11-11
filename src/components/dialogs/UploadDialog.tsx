@@ -44,8 +44,10 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
     if (e.target.files && e.target.files.length > 0) {
       setIsLoading(true);
       new Compressor(e.target.files[0], {
-        quality: 0.2,
+        quality: 0.8,
         convertTypes: 'image/jpeg',
+        maxHeight: 1080,
+        maxWidth: 1080,
         success(result) {
           if (result.size > MAX_PHOTO_FILE_SIZE) {
             toastPhotoFileSizeError();
