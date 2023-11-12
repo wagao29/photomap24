@@ -13,8 +13,8 @@ export const ErrorDialog = memo(function ErrorDialogBase({ title, content, onClo
   return (
     <Dialog>
       <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />
-      <div className='rounded-lg bg-white p-5 border border-gray-300 flex flex-col items-center justify-center text-center gap-2'>
-        <h1 className='text-red-600 font-bold'>{title}</h1>
+      <div className='rounded-lg bg-white p-5 border-2 border-gray-600 flex flex-col items-center justify-center text-center gap-2'>
+        <h1 className='text-red-600 font-bold text-lg'>{title}</h1>
         <p className='text-sm'>{content}</p>
       </div>
     </Dialog>
