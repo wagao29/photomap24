@@ -11,7 +11,7 @@ export const PrivacyDialog = memo(function PrivacyDialogBase({ onClose }: Props)
   return (
     <Dialog height='80%'>
       <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />
-      <div className='flex flex-col items-center h-full pb-4 bg-white rounded border border-gray-300'>
+      <div className='flex flex-col items-center h-full pb-4 bg-white rounded-lg border-2 border-gray-600'>
         <h1 className='text-lg pt-6 font-bold'>Privacy Policy</h1>
         <div className='overflow-scroll hidden-scrollbar p-4'>
           <ul className='space-y-4 list-inside'>

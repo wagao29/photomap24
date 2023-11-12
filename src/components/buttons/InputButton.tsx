@@ -7,7 +7,7 @@ type Props = {
 };
 
 const baseStyle =
-  'p-2 border-2 border-gray-300 bg-white rounded-lg font-bold text-center active:bg-gray-300 hover:bg-gray-300 hover:cursor-pointer';
+  'p-2.5 bg-white rounded-lg font-bold text-center active:bg-gray-300 hover:bg-gray-300 hover:cursor-pointer';
 
 const InputButton = memo(function ImageInputBase({ onFileChange, className }: Props) {
   return (
