@@ -9,7 +9,7 @@ const ExploreButton = memo(function ExploreButtonBase({ onClick }: Props) {
   return (
     <button
       onClick={onClick}
-      className='bg-white border border-gray-300 rounded-full active:bg-gray-200 hover:bg-gray-200'
+      className='bg-white border border-gray-300 rounded-full active:bg-gray-100 hover:bg-gray-100'
       style={{
         position: 'absolute',
         right: '8px',
