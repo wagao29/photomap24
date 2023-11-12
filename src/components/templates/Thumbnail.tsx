@@ -46,7 +46,7 @@ const Thumbnail = ({ points }: Props) => {
   const mapPhoto = points[0].properties;
 
   return (
-    <div className='bg-white rounded-full hover:cursor-pointer hover:bg-gray-100'>
+    <div className='bg-white rounded-full hover:cursor-pointer'>
       <PhotoNumber points={points} />
       <img
         src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconPhoto}
