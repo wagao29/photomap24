@@ -8,9 +8,8 @@ function htmlPlugin(env: ReturnType<typeof loadEnv>) {
     name: 'html-transform',
     transformIndexHtml: {
       enforce: 'pre' as const,
-      transform: (html: string): string =>
-        html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match),
-    },
+      transform: (html: string): string => html.replace(/%(.*?)%/g, (match, p1) => env[p1] ?? match)
+    }
   };
 }
 
@@ -22,10 +21,10 @@ function isProd(env: ReturnType<typeof loadEnv>) {
 export default defineConfig(({ mode }) => {
   return {
     build: {
-      chunkSizeWarningLimit: 1500,
+      chunkSizeWarningLimit: 1500
     },
     esbuild: {
-      drop: isProd(loadEnv(mode, '.')) ? ['console', 'debugger'] : [],
+      drop: isProd(loadEnv(mode, '.')) ? ['console', 'debugger'] : []
     },
     plugins: [
       react(),
@@ -34,7 +33,7 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          theme_color: '#2563eb',
+          theme_color: '4B4B4B',
           background_color: '#ffffff',
           display: 'standalone',
           scope: '/',
@@ -44,48 +43,47 @@ export default defineConfig(({ mode }) => {
           description: '24 hour photo map',
           icons: [
             {
-              src: '/icon_logo_192.png',
+              src: '/icon-192x192.png',
               sizes: '192x192',
-              type: 'image/png',
+              type: 'image/png'
             },
             {
-              src: '/icon_logo_256.png',
+              src: '/icon-256x256.png',
               sizes: '256x256',
-              type: 'image/png',
+              type: 'image/png'
             },
             {
-              src: '/icon_logo_384.png',
+              src: '/icon-384x384.png',
               sizes: '384x384',
-              type: 'image/png',
+              type: 'image/png'
             },
             {
-              src: '/icon_logo_512.png',
+              src: '/icon-512x512.png',
               sizes: '512x512',
-              type: 'image/png',
-            },
-          ],
+              type: 'image/png'
+            }
+          ]
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
           runtimeCaching: [
             {
-              urlPattern:
-                /^https:\/\/firebasestorage\.googleapis\.com\/.*\.png/,
+              urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/.*\.png/,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'firebase-storage-cache',
                 expiration: {
                   maxEntries: 3000,
-                  maxAgeSeconds: 60 * 60 * 24 * 30,
+                  maxAgeSeconds: 60 * 60 * 24 * 30
                 },
                 cacheableResponse: {
-                  statuses: [0, 200],
-                },
-              },
-            },
-          ],
-        },
-      }),
-    ],
+                  statuses: [0, 200]
+                }
+              }
+            }
+          ]
+        }
+      })
+    ]
   };
 });
