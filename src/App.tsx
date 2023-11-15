@@ -37,6 +37,7 @@ import { fetchMapPhotos } from './apis/fetchMapPhotos';
 import Footer from './components/templates/Footer';
 import { TermsDialog } from './components/dialogs/TermsDialog';
 import { PrivacyDialog } from './components/dialogs/PrivacyDialog';
+import Header from './components/templates/Header';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -192,6 +193,7 @@ const App = () => {
       }}
       className='hidden-scrollbar'
     >
+      <Header />
       <Map
         initialViewState={mapState}
         style={{
