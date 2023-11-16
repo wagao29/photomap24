@@ -100,7 +100,7 @@ export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef,
         )}
         {imgUrl ? (
           <>
-            <img src={imgUrl} className='absolute inset-0 m-auto max-h-full' />
+            <img src={imgUrl} className='absolute inset-0 m-auto max-h-full py-10' />
             <Note
               onClickTerms={onClickTerms}
               onClickPrivacy={onClickPrivacy}
