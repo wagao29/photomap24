@@ -38,6 +38,7 @@ import Footer from './components/templates/Footer';
 import { TermsDialog } from './components/dialogs/TermsDialog';
 import { PrivacyDialog } from './components/dialogs/PrivacyDialog';
 import Header from './components/templates/Header';
+import { AppInfoDialog } from './components/dialogs/AppInfoDialog';
 
 const App = () => {
   const { openDialog, closeDialog } = useDialogContext();
@@ -168,6 +169,10 @@ const App = () => {
     }
   }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
 
+  const openAppInfoDialog = useCallback(() => {
+    openDialog(<AppInfoDialog onClose={closeDialog} />);
+  }, []);
+
   const openHowToUseDialog = useCallback(() => {
     openDialog(<TermsDialog onClose={closeDialog} />);
   }, []);
@@ -193,7 +198,7 @@ const App = () => {
       }}
       className='hidden-scrollbar'
     >
-      <Header />
+      <Header onClick={openAppInfoDialog} />
       <Map
         initialViewState={mapState}
         style={{
