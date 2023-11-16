@@ -96,7 +96,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
               e.currentTarget.onerror = null;
               e.currentTarget.src = iconPhoto;
             }}
-            className='absolute inset-0 m-auto max-h-full'
+            className='absolute inset-0 m-auto max-h-full py-10'
           />
         )}
         <Address className='absolute z-20 bottom-5 right-1' onClick={onClickAddress}>
