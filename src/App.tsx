@@ -58,7 +58,7 @@ const App = () => {
     openDialog(
       <ErrorDialog
         title='Geolocation error'
-        content='Geolocation is not supported. Please try from another device.'
+        content={`Geolocation is not supported.\nPlease try from another device.`}
         onClose={closeDialog}
       />
     );
@@ -68,7 +68,7 @@ const App = () => {
     openDialog(
       <ErrorDialog
         title='Geolocation Error'
-        content='User denied geolocation. Please allow use of geolocation.'
+        content={`User denied geolocation.\nPlease allow use of geolocation.`}
         onClose={closeDialog}
       />
     );
@@ -78,7 +78,7 @@ const App = () => {
     openDialog(
       <ErrorDialog
         title='Geolocation Error'
-        content='Failed to obtain geolocation. Please reload the page.'
+        content={`Failed to obtain geolocation.\nPlease reload the page.`}
         onClose={closeDialog}
       />
     );
