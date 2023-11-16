@@ -31,7 +31,7 @@ export const Dialog = ({ children, height }: Props) => {
           opacity: '0.5'
         }}
       ></div>
-      <div style={{ height }} className='absolute w-4/5 max-w-sm'>
+      <div style={{ height, maxHeight: 672 }} className='absolute w-4/5 max-w-sm'>
         {children}
       </div>
     </div>
