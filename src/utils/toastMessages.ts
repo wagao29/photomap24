@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-const className = 'border border-gray-300 font-bold text-sm';
+const className = 'bg-white border-2 border-gray-600 font-bold text-sm';
 
 // Message
 export const toastUploadPhotoMessage = () => {
