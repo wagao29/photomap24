@@ -1,5 +1,4 @@
 import iconPrevButton from '../../assets/icon_prev_button.svg';
-import toast from 'react-hot-toast';
 import { memo } from 'react';
 
 type Props = {
@@ -7,7 +6,7 @@ type Props = {
   visible: boolean;
 };
 
-const PrevButton = memo(function PrevButtonBase({ onClick, visible }: Props) {
+const PrevButton = memo(function PrevButton({ onClick, visible }: Props) {
   return (
     <img
       width={30}
@@ -19,11 +18,8 @@ const PrevButton = memo(function PrevButtonBase({ onClick, visible }: Props) {
       style={{
         left: -30
       }}
-      onClick={() => {
-        onClick();
-        toast.dismiss();
-      }}
-      alt='PrevButton'
+      onClick={onClick}
+      alt='previous'
     />
   );
 });

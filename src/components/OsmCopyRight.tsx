@@ -5,7 +5,7 @@ type Props = {
   className: string;
 };
 
-const OsmCopyRight = memo(function OsmCopyRightBase({ className }: Props) {
+const OsmCopyRight = memo(function OsmCopyRight({ className }: Props) {
   return (
     <a
       href='https://www.openstreetmap.org/copyright'

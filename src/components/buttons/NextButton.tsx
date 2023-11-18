@@ -1,5 +1,4 @@
 import iconNextButton from '../../assets/icon_next_button.svg';
-import toast from 'react-hot-toast';
 import { memo } from 'react';
 
 type Props = {
@@ -7,7 +6,7 @@ type Props = {
   visible: boolean;
 };
 
-const NextButton = memo(function NextButtonBase({ onClick, visible }: Props) {
+const NextButton = memo(function NextButton({ onClick, visible }: Props) {
   return (
     <img
       width={30}
@@ -19,11 +18,8 @@ const NextButton = memo(function NextButtonBase({ onClick, visible }: Props) {
       style={{
         right: -30
       }}
-      onClick={() => {
-        onClick();
-        toast.dismiss();
-      }}
-      alt='NextButton'
+      onClick={onClick}
+      alt='next'
     />
   );
 });

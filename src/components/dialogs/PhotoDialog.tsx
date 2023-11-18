@@ -13,6 +13,7 @@ import { MapRef } from 'react-map-gl';
 import OsmCopyRight from '../OsmCopyRight';
 import Spinner from '../Spinner';
 import Address from '../Address';
+import { toast } from 'react-hot-toast';
 
 type Props = {
   mapPhotos: MapPhoto[];
@@ -28,6 +29,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
 
   const onClickPrevBtn = useCallback(() => {
     if (currentIdx > 0) {
+      toast.dismiss();
       setIsLoading(true);
       setIsExpired(false);
       setRemainingTime(getRemainingTime(mapPhotos[currentIdx - 1].date));
@@ -37,6 +39,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
 
   const onClickNextBtn = useCallback(() => {
     if (currentIdx < mapPhotos.length - 1) {
+      toast.dismiss();
       setIsLoading(true);
       setIsExpired(false);
       setRemainingTime(getRemainingTime(mapPhotos[currentIdx + 1].date));

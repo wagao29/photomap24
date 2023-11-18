@@ -6,7 +6,9 @@ type Props = {
   onClickPrivacy: () => void;
 };
 
-const Footer = memo(function FooterBase({ onClickHowToUse, onClickTerms, onClickPrivacy }: Props) {
+const buttonStyle = 'text-gray-600 font-bold text-xs underline underline-offset-2';
+
+const Footer = memo(function Footer({ onClickHowToUse, onClickTerms, onClickPrivacy }: Props) {
   return (
     <div
       style={{
@@ -14,22 +16,13 @@ const Footer = memo(function FooterBase({ onClickHowToUse, onClickTerms, onClick
       }}
       className='absolute left-1/2 transform -translate-x-1/2 flex gap-3'
     >
-      <button
-        onClick={onClickHowToUse}
-        className='text-gray-600 font-bold text-xs underline underline-offset-2'
-      >
+      <button onClick={onClickHowToUse} className={buttonStyle}>
         How to use
       </button>
-      <button
-        onClick={onClickTerms}
-        className='text-gray-600 font-bold text-xs underline underline-offset-2'
-      >
+      <button onClick={onClickTerms} className={buttonStyle}>
         Terms
       </button>
-      <button
-        onClick={onClickPrivacy}
-        className='text-gray-600 font-bold text-xs underline underline-offset-2'
-      >
+      <button onClick={onClickPrivacy} className={buttonStyle}>
         Privacy
       </button>
     </div>

@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void;
 };
 
-const Header = memo(function HeaderBase({ onClick }: Props) {
+const Header = memo(function Header({ onClick }: Props) {
   return (
     <img
       src={iconLogo}

@@ -4,7 +4,7 @@ export const MAP_PHOTOS_DOCUMENT_ID = '1';
 
 // Map settings
 export const DEFAULT_POS = {
-  // 東京駅
+  // Tokyo Station
   lat: 35.6815947,
   lng: 139.7650003
 };

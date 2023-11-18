@@ -30,7 +30,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const UploadDialog = memo(function UploadDialogBase({ currentPos, mapRef, onClose }: Props) {
+export const UploadDialog = memo(function UploadDialog({ currentPos, mapRef, onClose }: Props) {
   const [imgUrl, setImgUrl] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [photoFile, setPhotoFile] = useState<File>();

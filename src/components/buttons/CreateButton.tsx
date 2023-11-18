@@ -5,7 +5,7 @@ type Props = {
   onClick: () => void;
 };
 
-const CreateButton = memo(function CreateButtonBase({ onClick }: Props) {
+const CreateButton = memo(function CreateButton({ onClick }: Props) {
   return (
     <button
       onClick={onClick}
@@ -17,7 +17,7 @@ const CreateButton = memo(function CreateButtonBase({ onClick }: Props) {
         zIndex: 10
       }}
     >
-      <img width={50} height={50} src={iconCreate} alt='Create Button' />
+      <img width={50} height={50} src={iconCreate} alt='create' />
     </button>
   );
 });
