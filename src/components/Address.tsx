@@ -7,7 +7,7 @@ type Props = {
   className: string;
 };
 
-const baseStyle = 'text-white underline';
+const baseStyle = 'text-white underline hover:cursor-pointer';
 
 const Address = memo(function AddressBase({ children, onClick, className }: Props) {
   return (
