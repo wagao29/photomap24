@@ -7,7 +7,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const PrivacyDialog = memo(function PrivacyDialogBase({ onClose }: Props) {
+export const PrivacyDialog = memo(function PrivacyDialog({ onClose }: Props) {
   return (
     <Dialog height='80%'>
       <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />

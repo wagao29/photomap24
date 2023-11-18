@@ -8,7 +8,7 @@ type Props = {
   onClick: () => void;
 };
 
-const CloseButton = memo(function CloseButtonBase({ color, onClick }: Props) {
+const CloseButton = memo(function CloseButton({ color, onClick }: Props) {
   return (
     <img
       className='absolute z-20 top-3 right-3 hover:cursor-pointer'
@@ -16,7 +16,7 @@ const CloseButton = memo(function CloseButtonBase({ color, onClick }: Props) {
       width={20}
       height={20}
       onClick={onClick}
-      alt='CloseButton'
+      alt='close'
     />
   );
 });

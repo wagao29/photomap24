@@ -8,16 +8,17 @@ type Props = {
 };
 
 const baseStyle = 'text-white text-xs text-center';
+const buttonStyle = 'underline underline-offset-2';
 
-const Note = memo(function NoteBase({ onClickTerms, onClickPrivacy, className }: Props) {
+const Note = memo(function Note({ onClickTerms, onClickPrivacy, className }: Props) {
   return (
     <div className={twMerge(baseStyle, className)}>
       {`By uploading a photo, you agree to PhotoMap24's `}
-      <button className='underline underline-offset-2' onClick={onClickTerms}>
+      <button className={buttonStyle} onClick={onClickTerms}>
         Terms of Service
       </button>
       {` and `}
-      <button className='underline underline-offset-2' onClick={onClickPrivacy}>
+      <button className={buttonStyle} onClick={onClickPrivacy}>
         Privacy Policy
       </button>
     </div>

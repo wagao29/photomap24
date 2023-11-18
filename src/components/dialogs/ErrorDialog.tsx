@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const ErrorDialog = memo(function ErrorDialogBase({ title, content, onClose }: Props) {
+export const ErrorDialog = memo(function ErrorDialog({ title, content, onClose }: Props) {
   return (
     <Dialog>
       <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />
