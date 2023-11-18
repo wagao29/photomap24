@@ -17,7 +17,7 @@ const Footer = memo(function Footer({ onClickHowToUse, onClickTerms, onClickPriv
       className='absolute left-1/2 transform -translate-x-1/2 flex gap-3'
     >
       <button onClick={onClickHowToUse} className={buttonStyle}>
-        How to use
+        About
       </button>
       <button onClick={onClickTerms} className={buttonStyle}>
         Terms
