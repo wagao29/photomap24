@@ -22,11 +22,17 @@ export const AboutDialog = memo(function AboutDialog({ onClose }: Props) {
           </p>
           <img src={appScreen} width={368} height={675} alt='app screen' className='my-4' />
           <div className='flex flex-col items-center gap-2'>
+            <p>
+              {'contact: '}
+              <a href='mailto:photomap24@gmail.com' className='underline'>
+                photomap24@gmail.com
+              </a>
+            </p>
             <p>build-number: {import.meta.env.VITE_BUILD_NUMBER}</p>
             <p>
-              © 2023{' '}
+              {'© 2023 '}
               <a
-                href={'https://twitter.com/_wagao_'}
+                href='https://twitter.com/_wagao_'
                 target='_blank'
                 rel='noreferrer'
                 className='underline'
