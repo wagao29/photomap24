@@ -40,7 +40,7 @@ export default defineConfig(({ mode }) => {
           start_url: '/',
           name: 'PhotoMap24',
           short_name: 'PhotoMap24',
-          description: '24 hour photo map',
+          description: 'location-based photo sharing service that can be viewed for 24 hours only',
           icons: [
             {
               src: '/icon-192x192.png',
