@@ -34,7 +34,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
 
   const onMapLoad = useCallback(() => {
     if (mapRef.current) {
-      // 最初の表示で bounds をセットするために一度実行する
+      // Run updateMap() once on load to set bounds on first display
       updateMap();
       mapRef.current.on('moveend', updateMap);
     }
@@ -68,7 +68,6 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       const onClick = () => {
         const mapPhotos: MapPhoto[] = supercluster
           .getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)
-          // 作成日時が新しい順に並び替える
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           .sort((pointA: any, pointB: any) => {
             return pointA.properties.date > pointB.properties.date ? -1 : 1;
