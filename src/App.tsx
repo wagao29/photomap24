@@ -212,7 +212,11 @@ const App = () => {
       >
         {PhotoMarkers}
         {currentPos && (
-          <CurrentPosMarker currentPos={currentPos} draggable={true} onDragEnd={onMarkerDragEnd} />
+          <CurrentPosMarker
+            currentPos={currentPos}
+            draggable={import.meta.env.VITE_PROJECT_ID === 'photomap24-dev'}
+            onDragEnd={onMarkerDragEnd}
+          />
         )}
         <GeolocateControl
           positionOptions={{
