@@ -39,7 +39,7 @@ export const fetchMapPhotos = async (): Promise<MapPhoto[]> => {
           }
         })
         .filter(
-          // expired の photo は表示しないようフィルタリング
+          // Filter to not display expired photos
           (mapPhoto: MapPhoto | null) => !!mapPhoto && getRemainingTime(mapPhoto.date) > 0
         );
       return mapPhotos;
