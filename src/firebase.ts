@@ -1,6 +1,6 @@
+import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
-import { getAnalytics } from 'firebase/analytics';
 import {
   CACHE_SIZE_UNLIMITED,
   initializeFirestore,

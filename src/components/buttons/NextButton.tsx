@@ -1,5 +1,5 @@
-import iconNextButton from '../../assets/icon_next_button.svg';
 import { memo } from 'react';
+import iconNextButton from '../../assets/icon_next_button.svg';
 
 type Props = {
   onClick: () => void;

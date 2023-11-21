@@ -1,5 +1,5 @@
-import iconPrevButton from '../../assets/icon_prev_button.svg';
 import { memo } from 'react';
+import iconPrevButton from '../../assets/icon_prev_button.svg';
 
 type Props = {
   onClick: () => void;

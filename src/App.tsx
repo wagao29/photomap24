@@ -1,5 +1,27 @@
-import { Toaster } from 'react-hot-toast';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import {
+  GeolocateControl,
+  GeolocateErrorEvent,
+  GeolocateResultEvent,
+  Map,
+  MapRef,
+  MarkerDragEvent
+} from 'react-map-gl';
+import { fetchMapPhotos } from './apis/fetchMapPhotos';
+import CreateButton from './components/buttons/CreateButton';
+import ExploreButton from './components/buttons/ExploreButton';
+import CurrentPosMarker from './components/CurrentPosMarker';
+import { AboutModal } from './components/modals/AboutModal';
+import { ErrorModal } from './components/modals/ErrorModal';
+import { PhotoModal } from './components/modals/PhotoModal';
+import { PrivacyModal } from './components/modals/PrivacyModal';
+import { TermsModal } from './components/modals/TermsModal';
+import { UploadModal } from './components/modals/UploadModal';
+import Spinner from './components/Spinner';
+import Footer from './components/templates/Footer';
+import Header from './components/templates/Header';
 import {
   DEFAULT_POS,
   DEFAULT_ZOOM,
@@ -11,34 +33,12 @@ import {
   MAX_ZOOM,
   MIN_ZOOM
 } from './constants';
-import {
-  GeolocateControl,
-  GeolocateErrorEvent,
-  GeolocateResultEvent,
-  Map,
-  MapRef,
-  MarkerDragEvent
-} from 'react-map-gl';
-import { useModalContext } from './providers/ModalProvider';
-import { ErrorModal } from './components/modals/ErrorModal';
-import { getCurrentPosition } from './utils/getCurrentPosition';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { sleep } from './utils/sleep';
-import Spinner from './components/Spinner';
-import CurrentPosMarker from './components/CurrentPosMarker';
-import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
-import CreateButton from './components/buttons/CreateButton';
+import { useModalContext } from './providers/ModalProvider';
+import { Coordinates, MapState } from './types';
+import { getCurrentPosition } from './utils/getCurrentPosition';
+import { sleep } from './utils/sleep';
 import { toastNoPhotosError, toastUploadPhotoMessage } from './utils/toastMessages';
-import { UploadModal } from './components/modals/UploadModal';
-import ExploreButton from './components/buttons/ExploreButton';
-import { PhotoModal } from './components/modals/PhotoModal';
-import { fetchMapPhotos } from './apis/fetchMapPhotos';
-import Footer from './components/templates/Footer';
-import { TermsModal } from './components/modals/TermsModal';
-import { PrivacyModal } from './components/modals/PrivacyModal';
-import Header from './components/templates/Header';
-import { AboutModal } from './components/modals/AboutModal';
 
 const App = () => {
   const { openModal, closeModal } = useModalContext();

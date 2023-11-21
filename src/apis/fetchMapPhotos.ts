@@ -1,6 +1,6 @@
-import { db } from '../firebase';
 import { collection, doc, getDoc } from 'firebase/firestore';
 import { FIRESTORE_VERSION, MAP_PHOTOS_DOCUMENT_ID } from '../constants';
+import { db } from '../firebase';
 import { MapPhoto } from '../types';
 import { getRemainingTime } from '../utils/getRemainingTime';
 

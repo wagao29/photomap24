@@ -1,28 +1,28 @@
 import Compressor from 'compressorjs';
 import { memo, useCallback, useState } from 'react';
-import { Coordinates } from '../../types';
-import { Modal } from '../templates/Modal';
-import CloseButton from '../buttons/CloseButton';
-import { generateThumbnail } from '../../utils/generateThumbnail';
-import { fetchAddress } from '../../apis/fetchAddress';
+import { MapRef } from 'react-map-gl';
 import { createPhoto } from '../../apis/createPhoto';
-import Spinner from '../Spinner';
+import { fetchAddress } from '../../apis/fetchAddress';
+import iconPhoto from '../../assets/icon_photo.svg';
+import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE, PLACEHOLDER_SIZE } from '../../constants';
+import { useModalContext } from '../../providers/ModalProvider';
+import { Coordinates } from '../../types';
+import { generateThumbnail } from '../../utils/generateThumbnail';
 import {
   toastLoadingPhotoFailed,
   toastPhotoFileSizeError,
   toastUploadPhotoFailed,
   toastUploadPhotoSuccess
 } from '../../utils/toastMessages';
-import iconPhoto from '../../assets/icon_photo.svg';
-import UploadButton from '../buttons/UploadButton';
-import { MapRef } from 'react-map-gl';
-import { useModalContext } from '../../providers/ModalProvider';
-import { PhotoModal } from './PhotoModal';
-import { TermsModal } from './TermsModal';
-import { PrivacyModal } from './PrivacyModal';
-import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE, PLACEHOLDER_SIZE } from '../../constants';
+import CloseButton from '../buttons/CloseButton';
 import InputButton from '../buttons/InputButton';
+import UploadButton from '../buttons/UploadButton';
+import Spinner from '../Spinner';
+import { Modal } from '../templates/Modal';
 import Note from '../templates/Note';
+import { PhotoModal } from './PhotoModal';
+import { PrivacyModal } from './PrivacyModal';
+import { TermsModal } from './TermsModal';
 
 type Props = {
   currentPos: Coordinates;

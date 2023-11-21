@@ -1,4 +1,4 @@
-import { GEO_ERROR_UNSUPPORTED, GEO_ERROR_PERMISSION, GEO_ERROR_OTHERS } from '../constants';
+import { GEO_ERROR_OTHERS, GEO_ERROR_PERMISSION, GEO_ERROR_UNSUPPORTED } from '../constants';
 
 export type Coordinates = {
   longitude: number;
