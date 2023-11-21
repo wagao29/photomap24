@@ -19,8 +19,8 @@ import {
   MapRef,
   MarkerDragEvent
 } from 'react-map-gl';
-import { useDialogContext } from './providers/DialogProvider';
-import { ErrorDialog } from './components/dialogs/ErrorDialog';
+import { useModalContext } from './providers/ModalProvider';
+import { ErrorModal } from './components/modals/ErrorModal';
 import { getCurrentPosition } from './utils/getCurrentPosition';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { sleep } from './utils/sleep';
@@ -30,18 +30,18 @@ import { Coordinates, MapState } from './types';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import CreateButton from './components/buttons/CreateButton';
 import { toastNoPhotosError, toastUploadPhotoMessage } from './utils/toastMessages';
-import { UploadDialog } from './components/dialogs/UploadDialog';
+import { UploadModal } from './components/modals/UploadModal';
 import ExploreButton from './components/buttons/ExploreButton';
-import { PhotoDialog } from './components/dialogs/PhotoDialog';
+import { PhotoModal } from './components/modals/PhotoModal';
 import { fetchMapPhotos } from './apis/fetchMapPhotos';
 import Footer from './components/templates/Footer';
-import { TermsDialog } from './components/dialogs/TermsDialog';
-import { PrivacyDialog } from './components/dialogs/PrivacyDialog';
+import { TermsModal } from './components/modals/TermsModal';
+import { PrivacyModal } from './components/modals/PrivacyModal';
 import Header from './components/templates/Header';
-import { AboutDialog } from './components/dialogs/AboutDialog';
+import { AboutModal } from './components/modals/AboutModal';
 
 const App = () => {
-  const { openDialog, closeDialog } = useDialogContext();
+  const { openModal, closeModal } = useModalContext();
 
   const [currentPos, setCurrentPos] = useState<Coordinates>();
   const [mapState, setMapState] = useState<MapState>({
@@ -55,32 +55,32 @@ const App = () => {
 
   const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
 
-  const openUnsupportedErrorDialog = useCallback(() => {
-    openDialog(
-      <ErrorDialog
+  const openUnsupportedErrorModal = useCallback(() => {
+    openModal(
+      <ErrorModal
         title='Geolocation error'
         content={`Geolocation is not supported.\nPlease try from another device.`}
-        onClose={closeDialog}
+        onClose={closeModal}
       />
     );
   }, []);
 
-  const openPermissionErrorDialog = useCallback(() => {
-    openDialog(
-      <ErrorDialog
+  const openPermissionErrorModal = useCallback(() => {
+    openModal(
+      <ErrorModal
         title='Geolocation Error'
         content={`User denied geolocation.\nPlease allow use of geolocation.`}
-        onClose={closeDialog}
+        onClose={closeModal}
       />
     );
   }, []);
 
-  const openOtherErrorDialog = useCallback(() => {
-    openDialog(
-      <ErrorDialog
+  const openOtherErrorModal = useCallback(() => {
+    openModal(
+      <ErrorModal
         title='Geolocation Error'
         content={`Failed to obtain geolocation.\nPlease reload the page.`}
-        onClose={closeDialog}
+        onClose={closeModal}
       />
     );
   }, []);
@@ -90,15 +90,15 @@ const App = () => {
       const result = await getCurrentPosition();
       switch (result) {
         case GEO_ERROR_UNSUPPORTED: {
-          openUnsupportedErrorDialog();
+          openUnsupportedErrorModal();
           break;
         }
         case GEO_ERROR_PERMISSION: {
-          openPermissionErrorDialog();
+          openPermissionErrorModal();
           break;
         }
         case GEO_ERROR_OTHERS: {
-          openOtherErrorDialog();
+          openOtherErrorModal();
           break;
         }
         default: {
@@ -114,10 +114,10 @@ const App = () => {
     })();
   }, []);
 
-  const onCloseDialog = useCallback(() => {
+  const onCloseModal = useCallback(() => {
     updateMapPhotos();
-    closeDialog();
-  }, [updateMapPhotos, closeDialog]);
+    closeModal();
+  }, [updateMapPhotos, closeModal]);
 
   const onClickCreate = async () => {
     if (mapRef.current && currentPos) {
@@ -127,9 +127,9 @@ const App = () => {
       });
       toastUploadPhotoMessage();
       await sleep(1.5);
-      openDialog(<UploadDialog currentPos={currentPos} mapRef={mapRef} onClose={onCloseDialog} />);
+      openModal(<UploadModal currentPos={currentPos} mapRef={mapRef} onClose={onCloseModal} />);
     } else {
-      openOtherErrorDialog();
+      openOtherErrorModal();
     }
   };
 
@@ -150,12 +150,12 @@ const App = () => {
   const onError = useCallback(
     (err: GeolocateErrorEvent) => {
       if (err.code === err.PERMISSION_DENIED) {
-        openPermissionErrorDialog();
+        openPermissionErrorModal();
       } else {
-        openOtherErrorDialog();
+        openOtherErrorModal();
       }
     },
-    [openPermissionErrorDialog, openOtherErrorDialog]
+    [openPermissionErrorModal, openOtherErrorModal]
   );
 
   const onClickExploreButton = useCallback(async () => {
@@ -163,22 +163,22 @@ const App = () => {
     if (mapPhotos.length === 0) {
       toastNoPhotosError();
     } else {
-      openDialog(
-        <PhotoDialog mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseDialog} />
+      openModal(
+        <PhotoModal mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseModal} />
       );
     }
-  }, [mapRef.current, openDialog, PhotoDialog, onCloseDialog]);
+  }, [mapRef.current, openModal, PhotoModal, onCloseModal]);
 
-  const openAboutDialog = useCallback(() => {
-    openDialog(<AboutDialog onClose={closeDialog} />);
+  const openAboutModal = useCallback(() => {
+    openModal(<AboutModal onClose={closeModal} />);
   }, []);
 
-  const openTermsDialog = useCallback(() => {
-    openDialog(<TermsDialog onClose={closeDialog} />);
+  const openTermsModal = useCallback(() => {
+    openModal(<TermsModal onClose={closeModal} />);
   }, []);
 
-  const openPrivacyDialog = useCallback(() => {
-    openDialog(<PrivacyDialog onClose={closeDialog} />);
+  const openPrivacyModal = useCallback(() => {
+    openModal(<PrivacyModal onClose={closeModal} />);
   }, []);
 
   if (!isReadyPos) {
@@ -194,7 +194,7 @@ const App = () => {
       }}
       className='hidden-scrollbar'
     >
-      <Header onClick={openAboutDialog} />
+      <Header onClick={openAboutModal} />
       <Map
         initialViewState={mapState}
         style={{
@@ -234,9 +234,9 @@ const App = () => {
       <ExploreButton onClick={onClickExploreButton} />
       <CreateButton onClick={onClickCreate} />
       <Footer
-        onClickHowToUse={openAboutDialog}
-        onClickTerms={openTermsDialog}
-        onClickPrivacy={openPrivacyDialog}
+        onClickHowToUse={openAboutModal}
+        onClickTerms={openTermsModal}
+        onClickPrivacy={openPrivacyModal}
       />
       <Toaster toastOptions={{ duration: 1500 }} />
     </div>

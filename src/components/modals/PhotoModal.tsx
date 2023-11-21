@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { CLOSE_BUTTON_WHITE, MAX_ZOOM, PLACEHOLDER_SIZE } from '../../constants';
 import { MapPhoto } from '../../types';
 import { getPhotoUrl } from '../../utils/getPhotoUrl';
-import { Dialog } from '../templates/Dialog';
+import { Modal } from '../templates/Modal';
 import CloseButton from '../buttons/CloseButton';
 import NextButton from '../buttons/NextButton';
 import PrevButton from '../buttons/PrevButton';
@@ -21,7 +21,7 @@ type Props = {
   onClose: () => void;
 };
 
-export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, onClose }: Props) {
+export const PhotoModal = memo(function PhotoModalBase({ mapPhotos, mapRef, onClose }: Props) {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [remainingTime, setRemainingTime] = useState<number>(getRemainingTime(mapPhotos[0].date));
   const [isExpired, setIsExpired] = useState<boolean>(false);
@@ -62,7 +62,7 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
   }, [mapRef.current, currentIdx]);
 
   return (
-    <Dialog height='80%'>
+    <Modal height='80%'>
       <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
       <PrevButton onClick={onClickPrevBtn} visible={!isLoading && currentIdx > 0} />
       <NextButton
@@ -107,6 +107,6 @@ export const PhotoDialog = memo(function PhotoDialogBase({ mapPhotos, mapRef, on
         </Address>
         <OsmCopyRight className='absolute z-20 bottom-1 right-1' />
       </div>
-    </Dialog>
+    </Modal>
   );
 });
