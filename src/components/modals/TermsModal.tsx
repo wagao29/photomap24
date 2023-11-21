@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Dialog } from '../templates/Dialog';
+import { Modal } from '../templates/Modal';
 import CloseButton from '../buttons/CloseButton';
 import { CLOSE_BUTTON_BLACK } from '../../constants';
 
@@ -7,9 +7,9 @@ type Props = {
   onClose: () => void;
 };
 
-export const TermsDialog = memo(function TermsDialog({ onClose }: Props) {
+export const TermsModal = memo(function TermsModal({ onClose }: Props) {
   return (
-    <Dialog height='80%'>
+    <Modal height='80%'>
       <CloseButton color={CLOSE_BUTTON_BLACK} onClick={onClose} />
       <div className='flex flex-col items-center h-full pb-4 bg-white rounded-lg border-2 border-gray-600'>
         <h1 className='text-lg pt-6 font-bold'>Terms of Service</h1>
@@ -59,6 +59,6 @@ export const TermsDialog = memo(function TermsDialog({ onClose }: Props) {
           </ul>
         </div>
       </div>
-    </Dialog>
+    </Modal>
   );
 });

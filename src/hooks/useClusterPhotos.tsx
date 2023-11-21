@@ -3,13 +3,13 @@ import { MapRef, Marker } from 'react-map-gl';
 import useSupercluster from 'use-supercluster';
 import { fetchMapPhotos } from '../apis/fetchMapPhotos';
 import Thumbnail from '../components/templates/Thumbnail';
-import { PhotoDialog } from '../components/dialogs/PhotoDialog';
+import { PhotoModal } from '../components/modals/PhotoModal';
 import { CLUSTER_RADIUS, DEFAULT_ZOOM, MAX_MAP_PHOTO_COUNT, MAX_ZOOM } from '../constants';
-import { useDialogContext } from '../providers/DialogProvider';
+import { useModalContext } from '../providers/ModalProvider';
 import { MapPhoto } from '../types';
 
 export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
-  const { openDialog, closeDialog } = useDialogContext();
+  const { openModal, closeModal } = useModalContext();
   const [mapPhotos, setMapPhotos] = useState<MapPhoto[]>([]);
   const [bounds, setBounds] = useState<[number, number, number, number]>();
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
@@ -40,10 +40,10 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     }
   }, [updateMap]);
 
-  const onCloseDialog = useCallback(() => {
+  const onCloseModal = useCallback(() => {
     updateMapPhotos();
-    closeDialog();
-  }, [updateMap, closeDialog]);
+    closeModal();
+  }, [updateMap, closeModal]);
 
   const points = mapPhotos.map((mapPhoto) => ({
     type: 'Feature',
@@ -81,7 +81,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
               date: point.properties.date
             };
           });
-        openDialog(<PhotoDialog mapPhotos={mapPhotos} mapRef={mapRef} onClose={onCloseDialog} />);
+        openModal(<PhotoModal mapPhotos={mapPhotos} mapRef={mapRef} onClose={onCloseModal} />);
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
@@ -90,8 +90,8 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
       );
     } else {
       const onClick = () => {
-        openDialog(
-          <PhotoDialog
+        openModal(
+          <PhotoModal
             mapPhotos={[
               {
                 id: cluster.properties.id,
@@ -101,7 +101,7 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
               }
             ]}
             mapRef={mapRef}
-            onClose={onCloseDialog}
+            onClose={onCloseModal}
           />
         );
       };

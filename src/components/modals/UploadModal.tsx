@@ -1,7 +1,7 @@
 import Compressor from 'compressorjs';
 import { memo, useCallback, useState } from 'react';
 import { Coordinates } from '../../types';
-import { Dialog } from '../templates/Dialog';
+import { Modal } from '../templates/Modal';
 import CloseButton from '../buttons/CloseButton';
 import { generateThumbnail } from '../../utils/generateThumbnail';
 import { fetchAddress } from '../../apis/fetchAddress';
@@ -16,10 +16,10 @@ import {
 import iconPhoto from '../../assets/icon_photo.svg';
 import UploadButton from '../buttons/UploadButton';
 import { MapRef } from 'react-map-gl';
-import { useDialogContext } from '../../providers/DialogProvider';
-import { PhotoDialog } from './PhotoDialog';
-import { TermsDialog } from './TermsDialog';
-import { PrivacyDialog } from './PrivacyDialog';
+import { useModalContext } from '../../providers/ModalProvider';
+import { PhotoModal } from './PhotoModal';
+import { TermsModal } from './TermsModal';
+import { PrivacyModal } from './PrivacyModal';
 import { CLOSE_BUTTON_WHITE, MAX_PHOTO_FILE_SIZE, PLACEHOLDER_SIZE } from '../../constants';
 import InputButton from '../buttons/InputButton';
 import Note from '../templates/Note';
@@ -30,15 +30,15 @@ type Props = {
   onClose: () => void;
 };
 
-export const UploadDialog = memo(function UploadDialog({ currentPos, mapRef, onClose }: Props) {
+export const UploadModal = memo(function UploadModal({ currentPos, mapRef, onClose }: Props) {
   const [imgUrl, setImgUrl] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [photoFile, setPhotoFile] = useState<File>();
 
-  const { openDialog, closeDialog } = useDialogContext();
+  const { openModal, closeModal } = useModalContext();
 
-  const onClickTerms = useCallback(() => openDialog(<TermsDialog onClose={closeDialog} />), []);
-  const onClickPrivacy = useCallback(() => openDialog(<PrivacyDialog onClose={closeDialog} />), []);
+  const onClickTerms = useCallback(() => openModal(<TermsModal onClose={closeModal} />), []);
+  const onClickPrivacy = useCallback(() => openModal(<PrivacyModal onClose={closeModal} />), []);
 
   const onFileChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -76,8 +76,8 @@ export const UploadDialog = memo(function UploadDialog({ currentPos, mapRef, onC
       const photoId = await createPhoto(photoFile, thumbnailBlob, currentPos, address);
       toastUploadPhotoSuccess();
       setIsLoading(false);
-      openDialog(
-        <PhotoDialog
+      openModal(
+        <PhotoModal
           mapPhotos={[{ id: photoId, pos: currentPos, addr: address, date: new Date() }]}
           mapRef={mapRef}
           onClose={onClose}
@@ -92,7 +92,7 @@ export const UploadDialog = memo(function UploadDialog({ currentPos, mapRef, onC
   }, [currentPos, photoFile]);
 
   return (
-    <Dialog height='80%'>
+    <Modal height='80%'>
       <CloseButton color={CLOSE_BUTTON_WHITE} onClick={onClose} />
       <div className='h-full relative overflow-scroll hidden-scrollbar rounded-lg bg-black'>
         {isLoading && (
@@ -120,6 +120,6 @@ export const UploadDialog = memo(function UploadDialog({ currentPos, mapRef, onC
           </>
         )}
       </div>
-    </Dialog>
+    </Modal>
   );
 });

@@ -5,7 +5,7 @@ type Props = {
   height?: string;
 };
 
-export const Dialog = ({ children, height }: Props) => {
+export const Modal = ({ children, height }: Props) => {
   return (
     <div className='fixed inset-0 flex justify-center items-center z-50'>
       <div className='fixed inset-0 bg-gray-500 opacity-50' />
