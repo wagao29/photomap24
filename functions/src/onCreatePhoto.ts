@@ -1,5 +1,5 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 
 const FIRESTORE_VERSION = 1;
 const MAP_PHOTOS_DOCUMENT_ID = 1;

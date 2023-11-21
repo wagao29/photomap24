@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import iconCloseWhite from '../../assets/icon_close_white.svg';
 import iconCloseBlack from '../../assets/icon_close_black.svg';
+import iconCloseWhite from '../../assets/icon_close_white.svg';
 import { CLOSE_BUTTON_BLACK, CLOSE_BUTTON_WHITE } from '../../constants';
 
 type Props = {

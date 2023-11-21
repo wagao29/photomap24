@@ -1,19 +1,19 @@
 import { memo, useCallback, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { MapRef } from 'react-map-gl';
+import iconPhoto from '../../assets/icon_photo.svg';
 import { CLOSE_BUTTON_WHITE, MAX_ZOOM, PLACEHOLDER_SIZE } from '../../constants';
 import { MapPhoto } from '../../types';
 import { getPhotoUrl } from '../../utils/getPhotoUrl';
-import { Modal } from '../templates/Modal';
+import { getRemainingTime } from '../../utils/getRemainingTime';
+import Address from '../Address';
 import CloseButton from '../buttons/CloseButton';
 import NextButton from '../buttons/NextButton';
 import PrevButton from '../buttons/PrevButton';
-import Timer from '../templates/Timer';
-import iconPhoto from '../../assets/icon_photo.svg';
-import { getRemainingTime } from '../../utils/getRemainingTime';
-import { MapRef } from 'react-map-gl';
 import OsmCopyRight from '../OsmCopyRight';
 import Spinner from '../Spinner';
-import Address from '../Address';
-import { toast } from 'react-hot-toast';
+import { Modal } from '../templates/Modal';
+import Timer from '../templates/Timer';
 
 type Props = {
   mapPhotos: MapPhoto[];

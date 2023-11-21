@@ -1,8 +1,8 @@
 import { memo } from 'react';
-import { Modal } from '../templates/Modal';
-import CloseButton from '../buttons/CloseButton';
-import { CLOSE_BUTTON_BLACK } from '../../constants';
 import appScreen from '../../assets/app_screen.png';
+import { CLOSE_BUTTON_BLACK } from '../../constants';
+import CloseButton from '../buttons/CloseButton';
+import { Modal } from '../templates/Modal';
 
 type Props = {
   onClose: () => void;
