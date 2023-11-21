@@ -1,6 +1,6 @@
 /// <reference types="vitest" />
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 function htmlPlugin(env: ReturnType<typeof loadEnv>) {
@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: 'autoUpdate',
         manifest: {
-          theme_color: '4B4B4B',
+          theme_color: '#4B4B4B',
           background_color: '#ffffff',
           display: 'standalone',
           scope: '/',
