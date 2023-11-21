@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getAnalytics } from 'firebase/analytics';
 import {
   CACHE_SIZE_UNLIMITED,
@@ -19,6 +20,13 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+if (firebaseConfig.projectId === 'photomap24-21f9f') {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_SITEKEY),
+    isTokenAutoRefreshEnabled: true
+  });
+}
 
 export const db = initializeFirestore(app, {
   localCache: persistentLocalCache({
