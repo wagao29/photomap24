@@ -7,7 +7,7 @@ type Props = {
   points: any[];
 };
 
-const photoNumberClassName =
+const photoNumberStyle =
   'font-bold text-base absolute flex items-center justify-center rounded-full border bg-white border-gray-300';
 
 const baseStyle = {
@@ -17,45 +17,29 @@ const baseStyle = {
   right: -10
 };
 
-const PhotoNumber = ({ points }: Props) => {
-  const pointCount = points.length;
-
-  if (pointCount >= MAX_MAP_PHOTO_COUNT) {
-    return (
-      <span className={photoNumberClassName} style={baseStyle}>
-        <span className='text-sm'>99</span>
-        <span className='text-sm mb-1'>+</span>
-      </span>
-    );
-  } else {
-    return (
-      <span className={photoNumberClassName} style={baseStyle}>
-        {pointCount}
-      </span>
-    );
-  }
-};
-
 const Thumbnail = ({ points }: Props) => {
-  const pointCount = points.length;
-  if (pointCount < MAX_MAP_PHOTO_COUNT) {
-    points.sort((pointA, pointB) => {
-      return pointA.properties.date > pointB.properties.date ? -1 : 1;
-    });
-  }
-  const mapPhoto = points[0].properties;
+  points.sort((pointA, pointB) => {
+    return pointA.properties.date > pointB.properties.date ? -1 : 1;
+  });
+  const displayMapPhoto = points[0].properties;
 
   return (
     <div className='bg-white rounded-full hover:cursor-pointer'>
-      <PhotoNumber points={points} />
+      {points.length >= MAX_MAP_PHOTO_COUNT ? (
+        <span className={photoNumberStyle} style={baseStyle}>
+          <span className='text-sm'>99</span>
+          <span className='text-sm mb-1'>+</span>
+        </span>
+      ) : (
+        <span className={photoNumberStyle} style={baseStyle}>
+          {points.length}
+        </span>
+      )}
       <img
-        src={pointCount < MAX_MAP_PHOTO_COUNT ? getThumbnailUrl(mapPhoto.id) : iconPhoto}
+        src={getThumbnailUrl(displayMapPhoto.id)}
         width={THUMBNAIL_DISPLAY_SIZE}
         height={THUMBNAIL_DISPLAY_SIZE}
-        style={{
-          backgroundColor: 'black',
-          borderRadius: '0.5rem'
-        }}
+        className='bg-black rounded-lg'
         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
           e.currentTarget.onerror = null;
           e.currentTarget.src = iconPhoto;
