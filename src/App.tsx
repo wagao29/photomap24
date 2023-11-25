@@ -1,33 +1,21 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { Toaster } from 'react-hot-toast';
-import {
-  GeolocateControl,
-  GeolocateErrorEvent,
-  GeolocateResultEvent,
-  Map,
-  MapRef,
-  MarkerDragEvent
-} from 'react-map-gl';
+import { GeolocateControl, GeolocateErrorEvent, Map, MapRef } from 'react-map-gl';
 import { fetchMapPhotos } from './apis/fetchMapPhotos';
 import CreateButton from './components/buttons/CreateButton';
 import ExploreButton from './components/buttons/ExploreButton';
-import CurrentPosMarker from './components/CurrentPosMarker';
 import { AboutModal } from './components/modals/AboutModal';
 import { ErrorModal } from './components/modals/ErrorModal';
 import { PhotoModal } from './components/modals/PhotoModal';
 import { PrivacyModal } from './components/modals/PrivacyModal';
 import { TermsModal } from './components/modals/TermsModal';
 import { UploadModal } from './components/modals/UploadModal';
-import Spinner from './components/Spinner';
 import Footer from './components/templates/Footer';
 import Header from './components/templates/Header';
 import {
   DEFAULT_POS,
   DEFAULT_ZOOM,
-  GEO_ERROR_OTHERS,
-  GEO_ERROR_PERMISSION,
-  GEO_ERROR_UNSUPPORTED,
   GET_CURRENT_POSITION_TIME_OUT,
   MAP_STYLE_URL,
   MAX_ZOOM,
@@ -35,35 +23,13 @@ import {
 } from './constants';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import { useModalContext } from './providers/ModalProvider';
-import { Coordinates, MapState } from './types';
-import { getCurrentPosition } from './utils/getCurrentPosition';
-import { sleep } from './utils/sleep';
-import { toastNoPhotosError, toastUploadPhotoMessage } from './utils/toastMessages';
+import { toastNoPhotosError } from './utils/toastMessages';
 
 const App = () => {
   const { openModal, closeModal } = useModalContext();
 
-  const [currentPos, setCurrentPos] = useState<Coordinates>();
-  const [mapState, setMapState] = useState<MapState>({
-    longitude: DEFAULT_POS.lng,
-    latitude: DEFAULT_POS.lat,
-    zoom: DEFAULT_ZOOM
-  });
-  const [isReadyPos, setIsReadyPos] = useState<boolean>(false);
-
   const mapRef = useRef<MapRef>(null);
-
   const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
-
-  const openUnsupportedErrorModal = useCallback(() => {
-    openModal(
-      <ErrorModal
-        title='Geolocation error'
-        content={`Geolocation is not supported.\nPlease try from another device.`}
-        onClose={closeModal}
-      />
-    );
-  }, []);
 
   const openPermissionErrorModal = useCallback(() => {
     openModal(
@@ -86,32 +52,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    (async () => {
-      const result = await getCurrentPosition();
-      switch (result) {
-        case GEO_ERROR_UNSUPPORTED: {
-          openUnsupportedErrorModal();
-          break;
-        }
-        case GEO_ERROR_PERMISSION: {
-          openPermissionErrorModal();
-          break;
-        }
-        case GEO_ERROR_OTHERS: {
-          openOtherErrorModal();
-          break;
-        }
-        default: {
-          setCurrentPos(result);
-          setMapState({
-            ...result,
-            zoom: DEFAULT_ZOOM
-          });
-        }
-      }
-      await updateMapPhotos();
-      setIsReadyPos(true);
-    })();
+    updateMapPhotos();
   }, []);
 
   const onCloseModal = useCallback(() => {
@@ -119,33 +60,9 @@ const App = () => {
     closeModal();
   }, [updateMapPhotos, closeModal]);
 
-  const onClickCreate = async () => {
-    if (mapRef.current && currentPos) {
-      mapRef.current.jumpTo({
-        center: [currentPos.longitude, currentPos.latitude],
-        zoom: MAX_ZOOM
-      });
-      toastUploadPhotoMessage();
-      await sleep(1.5);
-      openModal(<UploadModal currentPos={currentPos} mapRef={mapRef} onClose={onCloseModal} />);
-    } else {
-      openOtherErrorModal();
-    }
+  const onClickCreate = () => {
+    openModal(<UploadModal mapRef={mapRef} onClose={onCloseModal} />);
   };
-
-  const onMarkerDragEnd = useCallback((event: MarkerDragEvent) => {
-    setCurrentPos({
-      longitude: event.lngLat.lng,
-      latitude: event.lngLat.lat
-    });
-  }, []);
-
-  const onGeolocate = useCallback((e: GeolocateResultEvent) => {
-    setCurrentPos({
-      longitude: e.coords.longitude,
-      latitude: e.coords.latitude
-    });
-  }, []);
 
   const onError = useCallback(
     (err: GeolocateErrorEvent) => {
@@ -181,10 +98,6 @@ const App = () => {
     openModal(<PrivacyModal onClose={closeModal} />);
   }, []);
 
-  if (!isReadyPos) {
-    return <Spinner className='absolute inset-0 flex items-center justify-center' />;
-  }
-
   return (
     <div
       style={{
@@ -196,7 +109,11 @@ const App = () => {
     >
       <Header onClick={openAboutModal} />
       <Map
-        initialViewState={mapState}
+        initialViewState={{
+          longitude: DEFAULT_POS.lng,
+          latitude: DEFAULT_POS.lat,
+          zoom: DEFAULT_ZOOM
+        }}
         style={{
           width: '100%',
           height: '100%'
@@ -211,23 +128,15 @@ const App = () => {
         touchPitch={false}
       >
         {PhotoMarkers}
-        {currentPos && (
-          <CurrentPosMarker
-            currentPos={currentPos}
-            draggable={import.meta.env.VITE_PROJECT_ID === 'photomap24-dev'}
-            onDragEnd={onMarkerDragEnd}
-          />
-        )}
         <GeolocateControl
           positionOptions={{
             timeout: GET_CURRENT_POSITION_TIME_OUT,
             enableHighAccuracy: true
           }}
-          showUserLocation={false}
+          showUserLocation={true}
           trackUserLocation={true}
           position='bottom-left'
-          fitBoundsOptions={{ maxZoom: DEFAULT_ZOOM }}
-          onGeolocate={onGeolocate}
+          fitBoundsOptions={{ maxZoom: MAX_ZOOM }}
           onError={onError}
         />
       </Map>
