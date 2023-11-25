@@ -1,0 +1,49 @@
+name: Deploy to Firebase Hosting on merge
+'on':
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    env:
+      VITE_API_KEY: ${{ secrets.VITE_API_KEY_PROD }}
+      VITE_AUTH_DOMAIN: ${{ secrets.VITE_AUTH_DOMAIN_PROD }}
+      VITE_BASE_URL: ${{ secrets.VITE_BASE_URL_PROD }}
+      VITE_PROJECT_ID: ${{ secrets.VITE_PROJECT_ID_PROD }}
+      VITE_STORAGE_BUCKET: ${{ secrets.VITE_STORAGE_BUCKET_PROD }}
+      VITE_MESSAGING_SENDER_ID: ${{ secrets.VITE_MESSAGING_SENDER_ID_PROD }}
+      VITE_APP_ID: ${{ secrets.VITE_APP_ID_PROD }}
+      VITE_RECAPTCHA_SITEKEY: ${{ secrets.VITE_RECAPTCHA_SITEKEY_PROD }}
+      VITE_VITE_MEASUREMENT_ID: ${{ secrets.VITE_MEASUREMENT_ID_PROD }}
+      VITE_MAPBOX_ACCESS_TOKEN: ${{ secrets.VITE_MAPBOX_ACCESS_TOKEN_PROD }}
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      GCP_SA_KEY: ${{ secrets.GCP_SA_KEY_PROD }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install packages
+        run: |
+          npm install
+          npm install -g firebase-tools@latest
+      - name: Run lint
+        run: npm run lint
+      - name: Set build number
+        run: echo "VITE_BUILD_NUMBER=$(git show --format='%h' --no-patch)" >> $GITHUB_ENV
+      - name: Build app
+        run: npm run build:prod
+      - name: Make GOOGLE_APPLICATION_CREDENTIALS
+        run: echo $GCP_SA_KEY | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
+      - name: Deploy to hosting
+        run: |
+          firebase deploy --only hosting --project $VITE_PROJECT_ID
+      - name: Install packages in functions
+        run: npm install
+        working-directory: ./functions
+      - name: Deploy to functions
+        run: |
+          firebase deploy --only functions --project $VITE_PROJECT_ID

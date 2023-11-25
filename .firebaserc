@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "prod": "photomap24-21f9f",
+    "dev": "photomap24-dev",
+    "default": "photomap24-dev"
+  }
+}
