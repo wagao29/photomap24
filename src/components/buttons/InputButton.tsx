@@ -13,7 +13,7 @@ const InputButton = memo(function ImageInput({ onFileChange, className }: Props)
   return (
     <label className={twMerge(baseStyle, className)}>
       Select Photo
-      <input type='file' accept='image/*' onChange={onFileChange} style={{ display: 'none' }} />
+      <input type='file' accept='image/*' onChange={onFileChange} className='hidden' />
     </label>
   );
 });
