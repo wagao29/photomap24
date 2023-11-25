@@ -38,9 +38,9 @@ jobs:
         run: npm run build:prod
       - name: Make GOOGLE_APPLICATION_CREDENTIALS
         run: echo $GCP_SA_KEY | base64 -d > $GOOGLE_APPLICATION_CREDENTIALS
-      - name: Deploy to Firebase Hosting and FirestoreRules and StorageRules
+      - name: Deploy to hosting
         run: |
-          firebase deploy --only hosting,firestore,storage --project $VITE_PROJECT_ID
+          firebase deploy --only hosting --project $VITE_PROJECT_ID
       - name: Install packages in functions
         run: npm install
         working-directory: ./functions
