@@ -22,10 +22,6 @@ export const THUMBNAIL_DISPLAY_SIZE = 100;
 export const MAX_PHOTO_FILE_SIZE = 500000;
 export const PLACEHOLDER_SIZE = 200;
 
-// Geolocation sources
-export const GEO_SOURCE_CURRENT_LOCATION = 'geo_source_current_location';
-export const GEO_SOURCE_EXIF_GEO_INFO = 'geo_source_exif_geo_info';
-
 // Geolocation errors
 export const GEO_ERROR_UNSUPPORTED = 'geo_error_unsupported';
 export const GEO_ERROR_PERMISSION = 'geo_error_permission';
