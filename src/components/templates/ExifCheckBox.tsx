@@ -14,7 +14,7 @@ const ExifCheckBox = memo(function ExifCheckBox({ disabled, onChange, className 
         type='checkbox'
         id='exif-pos-check'
         disabled={disabled}
-        className='w-4 h-4 mr-1.5 accent-yellow-500 hover:cursor-pointer'
+        className='w-4 h-4 mr-1.5 accent-yellow-500 rounded hover:cursor-pointer disabled:bg-gray-400'
         onChange={onChange}
       />
       <label
