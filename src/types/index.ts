@@ -12,8 +12,6 @@ export type MapPhoto = {
   date: Date;
 };
 
-export type MapState = Coordinates & { zoom: number };
-
 export type GeoError =
   | typeof GEO_ERROR_UNSUPPORTED
   | typeof GEO_ERROR_PERMISSION

@@ -1,15 +1,10 @@
-import {
-  GEO_ERROR_OTHERS,
-  GEO_ERROR_PERMISSION,
-  GEO_ERROR_UNSUPPORTED,
-  GET_CURRENT_POSITION_TIME_OUT
-} from '../constants';
-import { Coordinates, GeoError } from '../types';
+import { GET_CURRENT_POSITION_TIME_OUT } from '../constants';
+import { Coordinates } from '../types';
 
-export const getCurrentPosition = (): Promise<Coordinates | GeoError> => {
-  return new Promise((resolve) => {
+export const getCurrentPosition = (): Promise<Coordinates> => {
+  return new Promise((resolve, reject) => {
     if (!('geolocation' in navigator)) {
-      resolve(GEO_ERROR_UNSUPPORTED);
+      reject(new Error('Geolocation is unsupported'));
     }
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -17,11 +12,7 @@ export const getCurrentPosition = (): Promise<Coordinates | GeoError> => {
         resolve({ latitude, longitude });
       },
       (err) => {
-        if (err.code === err.PERMISSION_DENIED) {
-          resolve(GEO_ERROR_PERMISSION);
-        } else {
-          resolve(GEO_ERROR_OTHERS);
-        }
+        reject(err);
       },
       {
         timeout: GET_CURRENT_POSITION_TIME_OUT,

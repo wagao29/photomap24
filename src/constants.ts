@@ -8,11 +8,10 @@ export const DEFAULT_POS = {
   lat: 35.6815947,
   lng: 139.7650003
 };
-export const DEFAULT_ZOOM = 17;
+export const DEFAULT_ZOOM = 2;
 export const MAX_ZOOM = 17;
 export const MIN_ZOOM = 2;
-export const MAX_ZOOM_DURATION = 1000;
-export const GET_CURRENT_POSITION_TIME_OUT = 30000;
+export const GET_CURRENT_POSITION_TIME_OUT = 10000;
 export const MAX_MAP_PHOTO_COUNT = 100;
 export const MAP_STYLE_URL = 'mapbox://styles/wagao/cloict5xt000y01r62pusgbhs';
 export const CLUSTER_RADIUS = 100;
