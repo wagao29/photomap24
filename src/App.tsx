@@ -31,7 +31,7 @@ const App = () => {
   const mapRef = useRef<MapRef>(null);
   const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
 
-  const openPermissionErrorModal = useCallback(() => {
+  const openGeoPermissionErrorModal = useCallback(() => {
     openModal(
       <ErrorModal
         title='Geolocation Error'
@@ -41,7 +41,7 @@ const App = () => {
     );
   }, []);
 
-  const openOtherErrorModal = useCallback(() => {
+  const openGeoObtainErrorModal = useCallback(() => {
     openModal(
       <ErrorModal
         title='Geolocation Error'
@@ -60,20 +60,22 @@ const App = () => {
     closeModal();
   }, [updateMapPhotos, closeModal]);
 
-  const onClickCreate = () => {
-    openModal(<UploadModal mapRef={mapRef} onClose={onCloseModal} />);
-  };
-
-  const onError = useCallback(
+  const onGeolocateError = useCallback(
     (err: GeolocateErrorEvent) => {
       if (err.code === err.PERMISSION_DENIED) {
-        openPermissionErrorModal();
+        openGeoPermissionErrorModal();
       } else {
-        openOtherErrorModal();
+        openGeoObtainErrorModal();
       }
     },
-    [openPermissionErrorModal, openOtherErrorModal]
+    [openGeoPermissionErrorModal, openGeoObtainErrorModal]
   );
+
+  const onClickCreate = () => {
+    openModal(
+      <UploadModal mapRef={mapRef} onGeolocateError={onGeolocateError} onClose={onCloseModal} />
+    );
+  };
 
   const onClickExploreButton = useCallback(async () => {
     const mapPhotos = await fetchMapPhotos();
@@ -137,7 +139,7 @@ const App = () => {
           trackUserLocation={true}
           position='bottom-left'
           fitBoundsOptions={{ maxZoom: MAX_ZOOM }}
-          onError={onError}
+          onError={onGeolocateError}
         />
       </Map>
       <ExploreButton onClick={onClickExploreButton} />
