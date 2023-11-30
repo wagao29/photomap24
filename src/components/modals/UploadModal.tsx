@@ -16,10 +16,10 @@ import { generateThumbnail } from '../../utils/generateThumbnail';
 import { getCurrentPosition } from '../../utils/getCurrentPosition';
 import { getExifCoords } from '../../utils/getExifCoords';
 import {
-  toastGetAddressFailed,
-  toastLoadingPhotoFailed,
+  toastGetAddressError,
+  toastLoadingPhotoError,
   toastPhotoFileSizeError,
-  toastUploadPhotoFailed,
+  toastUploadPhotoError,
   toastUploadPhotoSuccess
 } from '../../utils/toastMessages';
 import CloseButton from '../buttons/CloseButton';
@@ -74,7 +74,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onGeolocateError,
         currentCoords.longitude
       ).catch((err) => {
         console.warn(err);
-        toastGetAddressFailed();
+        toastGetAddressError();
         setIsLoading(false);
         (e.target.value as unknown) = null;
       });
@@ -116,7 +116,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onGeolocateError,
         },
         error(err) {
           console.warn(err);
-          toastLoadingPhotoFailed();
+          toastLoadingPhotoError();
           setIsLoading(false);
           (e.target.value as unknown) = null;
         }
@@ -159,7 +159,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onGeolocateError,
       );
     } catch (err) {
       console.warn(err);
-      toastUploadPhotoFailed();
+      toastUploadPhotoError();
       onClose();
       setIsLoading(false);
     }

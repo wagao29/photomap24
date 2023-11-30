@@ -11,17 +11,17 @@ export const toastUploadPhotoSuccess = () => {
 };
 
 // Error
-export const toastUploadPhotoFailed = () => {
+export const toastUploadPhotoError = () => {
   toast.error('Upload Failed', {
     className,
-    id: 'UploadPhotoFailed'
+    id: 'UploadPhotoError'
   });
 };
 
-export const toastLoadingPhotoFailed = () => {
+export const toastLoadingPhotoError = () => {
   toast.error('Loading Photo Failed', {
     className,
-    id: 'LoadingPhotoFailed'
+    id: 'LoadingPhotoError'
   });
 };
 
@@ -32,9 +32,9 @@ export const toastPhotoFileSizeError = () => {
   });
 };
 
-export const toastGetAddressFailed = () => {
+export const toastGetAddressError = () => {
   toast.error('Failed to get address', {
     className,
-    id: 'toastGetAddressFailed'
+    id: 'GetAddressError'
   });
 };
