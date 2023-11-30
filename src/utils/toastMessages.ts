@@ -25,13 +25,6 @@ export const toastLoadingPhotoFailed = () => {
   });
 };
 
-export const toastNoPhotosError = () => {
-  toast.error('There are no photos', {
-    className,
-    id: 'NoPhotosError'
-  });
-};
-
 export const toastPhotoFileSizeError = () => {
   toast.error('File size is too large', {
     className,
