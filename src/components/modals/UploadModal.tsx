@@ -174,7 +174,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onGeolocateError,
         )}
         {imgUrl ? (
           <>
-            <p className='absolute left-1/2 transform -translate-x-1/2 top-3 text-white'>
+            <p className='absolute left-1/2 transform -translate-x-1/2 top-3 text-white max-w-full px-5 truncate'>
               {useExif ? exifPosInfo?.address : currentPosInfo?.address}
             </p>
             <ExifCheckBox
