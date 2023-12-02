@@ -23,7 +23,6 @@ import {
 } from './constants';
 import { useClusterPhotos } from './hooks/useClusterPhotos';
 import { useModalContext } from './providers/ModalProvider';
-import { toastNoPhotosError } from './utils/toastMessages';
 
 const App = () => {
   const { openModal, closeModal } = useModalContext();
@@ -31,60 +30,60 @@ const App = () => {
   const mapRef = useRef<MapRef>(null);
   const { onMapLoad, updateMapPhotos, PhotoMarkers } = useClusterPhotos(mapRef);
 
-  const openPermissionErrorModal = useCallback(() => {
-    openModal(
-      <ErrorModal
-        title='Geolocation Error'
-        content={`User denied geolocation.\nPlease allow use of geolocation.`}
-        onClose={closeModal}
-      />
-    );
-  }, []);
-
-  const openOtherErrorModal = useCallback(() => {
-    openModal(
-      <ErrorModal
-        title='Geolocation Error'
-        content={`Failed to obtain geolocation.\nPlease reload the page.`}
-        onClose={closeModal}
-      />
-    );
-  }, []);
-
   useEffect(() => {
     updateMapPhotos();
   }, []);
+
+  const onGeolocateError = useCallback(
+    (err: GeolocateErrorEvent) => {
+      if (err.code === err.PERMISSION_DENIED) {
+        openModal(
+          <ErrorModal
+            title='Geolocation Error'
+            content={`User denied geolocation.\nPlease allow use of geolocation.`}
+            onClose={closeModal}
+          />
+        );
+      } else {
+        openModal(
+          <ErrorModal
+            title='Geolocation Error'
+            content={`Failed to obtain geolocation.\nPlease reload the page.`}
+            onClose={closeModal}
+          />
+        );
+      }
+    },
+    [openModal, closeModal]
+  );
 
   const onCloseModal = useCallback(() => {
     updateMapPhotos();
     closeModal();
   }, [updateMapPhotos, closeModal]);
 
-  const onClickCreate = () => {
-    openModal(<UploadModal mapRef={mapRef} onClose={onCloseModal} />);
-  };
-
-  const onError = useCallback(
-    (err: GeolocateErrorEvent) => {
-      if (err.code === err.PERMISSION_DENIED) {
-        openPermissionErrorModal();
-      } else {
-        openOtherErrorModal();
-      }
-    },
-    [openPermissionErrorModal, openOtherErrorModal]
-  );
+  const onClickCreate = useCallback(() => {
+    openModal(
+      <UploadModal mapRef={mapRef} onGeolocateError={onGeolocateError} onClose={onCloseModal} />
+    );
+  }, [mapRef, openModal, onGeolocateError, onCloseModal]);
 
   const onClickExploreButton = useCallback(async () => {
     const mapPhotos = await fetchMapPhotos();
     if (mapPhotos.length === 0) {
-      toastNoPhotosError();
+      openModal(
+        <ErrorModal
+          title='No Photos'
+          content={`There are no photos.\nLet's upload your photo!`}
+          onClose={closeModal}
+        />
+      );
     } else {
       openModal(
         <PhotoModal mapPhotos={mapPhotos.reverse()} mapRef={mapRef} onClose={onCloseModal} />
       );
     }
-  }, [mapRef.current, openModal, PhotoModal, onCloseModal]);
+  }, [mapRef, openModal, closeModal, PhotoModal, onCloseModal]);
 
   const openAboutModal = useCallback(() => {
     openModal(<AboutModal onClose={closeModal} />);
@@ -137,7 +136,7 @@ const App = () => {
           trackUserLocation={true}
           position='bottom-left'
           fitBoundsOptions={{ maxZoom: MAX_ZOOM }}
-          onError={onError}
+          onError={onGeolocateError}
         />
       </Map>
       <ExploreButton onClick={onClickExploreButton} />

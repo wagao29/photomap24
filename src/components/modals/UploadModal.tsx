@@ -1,6 +1,6 @@
 import Compressor from 'compressorjs';
 import { memo, useCallback, useState } from 'react';
-import { MapRef } from 'react-map-gl';
+import { GeolocateErrorEvent, MapRef } from 'react-map-gl';
 import { createPhoto } from '../../apis/createPhoto';
 import { fetchAddress } from '../../apis/fetchAddress';
 import iconPhoto from '../../assets/icon_photo.svg';
@@ -16,11 +16,10 @@ import { generateThumbnail } from '../../utils/generateThumbnail';
 import { getCurrentPosition } from '../../utils/getCurrentPosition';
 import { getExifCoords } from '../../utils/getExifCoords';
 import {
-  toastGetAddressFailed,
-  toastGetCurrentPosFailed,
-  toastLoadingPhotoFailed,
+  toastGetAddressError,
+  toastLoadingPhotoError,
   toastPhotoFileSizeError,
-  toastUploadPhotoFailed,
+  toastUploadPhotoError,
   toastUploadPhotoSuccess
 } from '../../utils/toastMessages';
 import CloseButton from '../buttons/CloseButton';
@@ -36,6 +35,7 @@ import { TermsModal } from './TermsModal';
 
 type Props = {
   mapRef: React.RefObject<MapRef>;
+  onGeolocateError: (err: GeolocateErrorEvent) => void;
   onClose: () => void;
 };
 
@@ -44,7 +44,7 @@ type PosInfo = {
   address: string;
 };
 
-export const UploadModal = memo(function UploadModal({ mapRef, onClose }: Props) {
+export const UploadModal = memo(function UploadModal({ mapRef, onGeolocateError, onClose }: Props) {
   const [imgUrl, setImgUrl] = useState<string>();
   const [currentPosInfo, setCurrentPosInfo] = useState<PosInfo | null>(null);
   const [exifPosInfo, setExifPosInfo] = useState<PosInfo | null>(null);
@@ -63,9 +63,8 @@ export const UploadModal = memo(function UploadModal({ mapRef, onClose }: Props)
 
       const currentCoords = await getCurrentPosition().catch((err) => {
         console.warn(err);
-        toastGetCurrentPosFailed();
+        onGeolocateError(err);
         setIsLoading(false);
-        (e.target.value as unknown) = null;
       });
 
       if (!currentCoords) return;
@@ -75,7 +74,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onClose }: Props)
         currentCoords.longitude
       ).catch((err) => {
         console.warn(err);
-        toastGetAddressFailed();
+        toastGetAddressError();
         setIsLoading(false);
         (e.target.value as unknown) = null;
       });
@@ -117,7 +116,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onClose }: Props)
         },
         error(err) {
           console.warn(err);
-          toastLoadingPhotoFailed();
+          toastLoadingPhotoError();
           setIsLoading(false);
           (e.target.value as unknown) = null;
         }
@@ -160,7 +159,7 @@ export const UploadModal = memo(function UploadModal({ mapRef, onClose }: Props)
       );
     } catch (err) {
       console.warn(err);
-      toastUploadPhotoFailed();
+      toastUploadPhotoError();
       onClose();
       setIsLoading(false);
     }
