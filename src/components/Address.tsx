@@ -7,7 +7,7 @@ type Props = {
   className: string;
 };
 
-const baseStyle = 'text-white underline hover:cursor-pointer';
+const baseStyle = 'text-white underline max-w-full pl-2 truncate hover:cursor-pointer';
 
 const Address = memo(function Address({ children, onClick, className }: Props) {
   return (
