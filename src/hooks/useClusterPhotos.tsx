@@ -66,22 +66,29 @@ export const useClusterPhotos = (mapRef: React.RefObject<MapRef>) => {
     const { cluster: isCluster } = cluster.properties;
     if (isCluster) {
       const onClick = () => {
-        const mapPhotos: MapPhoto[] = supercluster
-          .getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .sort((pointA: any, pointB: any) => {
-            return pointA.properties.date > pointB.properties.date ? -1 : 1;
-          })
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .map((point: any) => {
-            return {
-              id: point.properties.id,
-              pos: point.properties.pos,
-              addr: point.properties.addr,
-              date: point.properties.date
-            };
+        if (mapRef.current?.getZoom() === MAX_ZOOM) {
+          const mapPhotos: MapPhoto[] = supercluster
+            .getLeaves(cluster.id, MAX_MAP_PHOTO_COUNT, 0)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .sort((pointA: any, pointB: any) => {
+              return pointA.properties.date > pointB.properties.date ? -1 : 1;
+            })
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            .map((point: any) => {
+              return {
+                id: point.properties.id,
+                pos: point.properties.pos,
+                addr: point.properties.addr,
+                date: point.properties.date
+              };
+            });
+          openModal(<PhotoModal mapPhotos={mapPhotos} mapRef={mapRef} onClose={onCloseModal} />);
+        } else {
+          mapRef.current?.flyTo({
+            center: [longitude, latitude],
+            zoom: Math.min(supercluster.getClusterExpansionZoom(cluster.id), MAX_ZOOM)
           });
-        openModal(<PhotoModal mapPhotos={mapPhotos} mapRef={mapRef} onClose={onCloseModal} />);
+        }
       };
       return (
         <Marker key={cluster.id} latitude={latitude} longitude={longitude} onClick={onClick}>
