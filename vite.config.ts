@@ -68,7 +68,7 @@ export default defineConfig(({ mode }) => {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
           runtimeCaching: [
             {
-              urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/.*\.png/,
+              urlPattern: /^https:\/\/firebasestorage\.googleapis\.com\/.*\.jpg/,
               handler: 'CacheFirst',
               options: {
                 cacheName: 'firebase-storage-cache',
