@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import appScreen from '../../assets/app_screen.png';
+import githubLogo from '../../assets/github_logo.svg';
 import { CLOSE_BUTTON_BLACK } from '../../constants';
 import CloseButton from '../buttons/CloseButton';
 import { Modal } from '../templates/Modal';
@@ -29,17 +30,22 @@ export const AboutModal = memo(function AboutModal({ onClose }: Props) {
               </a>
             </p>
             <p>build-number: {import.meta.env.VITE_BUILD_NUMBER}</p>
-            <p>
-              {'© 2023 '}
-              <a
-                href='https://twitter.com/_wagao_'
-                target='_blank'
-                rel='noreferrer'
-                className='underline'
-              >
-                wagao
+            <div className='flex gap-2'>
+              <p>
+                {'© 2023 '}
+                <a
+                  href='https://twitter.com/_wagao_'
+                  target='_blank'
+                  rel='noreferrer'
+                  className='underline'
+                >
+                  wagao
+                </a>
+              </p>
+              <a href='https://github.com/wagao29/photomap24' target='_blank' rel='noreferrer'>
+                <img src={githubLogo} width={20} height={20} alt='github' />
               </a>
-            </p>
+            </div>
           </div>
         </div>
       </div>
